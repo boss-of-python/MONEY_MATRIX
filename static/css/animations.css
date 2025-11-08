@@ -51,6 +51,145 @@
     }
 }
 
+/* New Modern Animations */
+
+/* Bounce Effect */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Heartbeat Effect */
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.1);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+
+/* Float Effect */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Jelly Effect */
+@keyframes jelly {
+    0%, 100% {
+        transform: scale(1, 1);
+    }
+    25% {
+        transform: scale(0.9, 1.1);
+    }
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+    75% {
+        transform: scale(0.95, 1.05);
+    }
+}
+
+/* Shake Effect */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Blur In */
+@keyframes blurIn {
+    0% {
+        filter: blur(5px);
+        opacity: 0;
+    }
+    100% {
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* Gradient Shift */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Liquid Effect */
+@keyframes liquid {
+    0% {
+        transform: translateX(-10px) translateY(-5px);
+    }
+    50% {
+        transform: translateX(10px) translateY(5px);
+    }
+    100% {
+        transform: translateX(-10px) translateY(-5px);
+    }
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* Morph Effect */
+@keyframes morph {
+    0% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+    100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+}
+
 /* Animation Classes */
 .fade-in {
     animation: fadeIn 0.5s ease-out;
@@ -68,6 +207,44 @@
     animation: scaleIn 0.3s ease-out;
 }
 
+/* New Animation Classes */
+.bounce {
+    animation: bounce 1s ease;
+}
+
+.heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.jelly {
+    animation: jelly 0.8s ease;
+}
+
+.shake {
+    animation: shake 0.8s ease;
+}
+
+.blur-in {
+    animation: blurIn 0.8s ease-out;
+}
+
+.gradient-shift {
+    background-size: 200% 200%;
+    animation: gradientShift 5s ease infinite;
+}
+
+.liquid {
+    animation: liquid 8s ease-in-out infinite;
+}
+
+.morph {
+    animation: morph 5s ease-in-out infinite;
+}
+
 /* Transition Utilities */
 .transition-all {
     transition: all var(--transition-base);
@@ -81,7 +258,15 @@
     transition: transform var(--transition-base);
 }
 
-/* Hover Effects */
+.transition-all-fast {
+    transition: all var(--transition-fast);
+}
+
+.transition-all-slow {
+    transition: all var(--transition-slow);
+}
+
+/* Enhanced Hover Effects */
 .hover-lift {
     transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
@@ -97,6 +282,54 @@
 
 .hover-scale:hover {
     transform: scale(1.02);
+}
+
+/* New Hover Effects */
+.hover-pop {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hover-pop:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-tilt {
+    transition: transform var(--transition-base);
+    transform-style: preserve-3d;
+}
+
+.hover-tilt:hover {
+    transform: rotateY(5deg) rotateX(5deg);
+}
+
+.hover-glow {
+    transition: box-shadow var(--transition-base);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
+}
+
+.hover-liquid {
+    transition: all var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-liquid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all var(--transition-slow);
+}
+
+.hover-liquid:hover::before {
+    left: 100%;
 }
 
 /* Loading Skeleton */
@@ -149,4 +382,47 @@
 
 .spin {
     animation: spin 1s linear infinite;
+}
+
+/* Ripple Animation */
+.ripple-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(79, 70, 229, 0.3);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+/* Staggered Animations */
+.staggered-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.staggered-children.animate > * {
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+.staggered-children.animate > *:nth-child(1) { animation-delay: 0.1s; }
+.staggered-children.animate > *:nth-child(2) { animation-delay: 0.2s; }
+.staggered-children.animate > *:nth-child(3) { animation-delay: 0.3s; }
+.staggered-children.animate > *:nth-child(4) { animation-delay: 0.4s; }
+.staggered-children.animate > *:nth-child(5) { animation-delay: 0.5s; }
+.staggered-children.animate > *:nth-child(6) { animation-delay: 0.6s; }
+.staggered-children.animate > *:nth-child(7) { animation-delay: 0.7s; }
+.staggered-children.animate > *:nth-child(8) { animation-delay: 0.8s; }
+.staggered-children.animate > *:nth-child(9) { animation-delay: 0.9s; }
+.staggered-children.animate > *:nth-child(10) { animation-delay: 1s; }
+
+/* Focus Animation */
+.focus-glow {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    animation: pulse 2s infinite;
 }
