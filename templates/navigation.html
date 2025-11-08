@@ -1,30 +1,30 @@
 <nav class="navbar glass-effect">
     <div class="nav-container">
         <!-- Logo -->
-        <a href="/" class="nav-logo">
+        <a href="/" class="nav-logo animate-float">
             <span class="logo-icon">💰</span>
             <span class="logo-text">Money Matrix</span>
         </a>
         
         <!-- Navigation Links (Desktop) -->
         <div class="nav-links" id="navLinks">
-            <a href="/dashboard" class="nav-link">
+            <a href="/dashboard" class="nav-link nav-link-dashboard">
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
             </a>
-            <a href="/transactions" class="nav-link">
+            <a href="/transactions" class="nav-link nav-link-transactions">
                 <span class="nav-icon">💸</span>
                 <span>Transactions</span>
             </a>
-            <a href="/budgets" class="nav-link">
+            <a href="/budgets" class="nav-link nav-link-budgets">
                 <span class="nav-icon">🎯</span>
                 <span>Budgets</span>
             </a>
-            <a href="/analytics" class="nav-link">
+            <a href="/analytics" class="nav-link nav-link-analytics">
                 <span class="nav-icon">📈</span>
                 <span>Analytics</span>
             </a>
-            <a href="/settings" class="nav-link">
+            <a href="/settings" class="nav-link nav-link-settings">
                 <span class="nav-icon">⚙️</span>
                 <span>Settings</span>
             </a>
@@ -33,19 +33,60 @@
         <!-- User Menu -->
         <div class="nav-actions">
             <!-- Theme Toggle -->
-            <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+            <button id="theme-toggle" class="icon-btn hover-pop" aria-label="Toggle theme">
                 <span class="theme-icon">🌙</span>
             </button>
             
+            <!-- Notifications -->
+            <div class="notification-menu">
+                <button class="icon-btn hover-pop" id="notificationBtn" aria-label="Notifications">
+                    <span class="notification-icon">🔔</span>
+                    <span class="notification-badge" id="notificationCount">0</span>
+                </button>
+                <div class="user-dropdown notification-dropdown" id="notificationDropdown">
+                    <div class="dropdown-header">
+                        <h3>Notifications</h3>
+                        <button class="clear-notifications">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="notificationList">
+                        <div class="notification-item">
+                            <p>Welcome to Money Matrix! Get started by adding your first transaction.</p>
+                            <span class="notification-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- User Menu -->
             <div class="user-menu">
-                <button class="user-btn" id="userMenuBtn">
+                <button class="user-btn hover-pop" id="userMenuBtn">
                     <span class="user-avatar">U</span>
                 </button>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="/settings" class="dropdown-item">⚙️ Settings</a>
-                    <a href="/export" class="dropdown-item">📥 Export Data</a>
-                    <button onclick="logout()" class="dropdown-item">🚪 Logout</button>
+                    <div class="user-info">
+                        <div class="user-avatar-large">U</div>
+                        <div class="user-details">
+                            <h4 id="userName">User Name</h4>
+                            <p id="userEmail">user@example.com</p>
+                        </div>
+                    </div>
+                    <a href="/settings" class="dropdown-item">
+                        <span class="dropdown-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                    <a href="/export" class="dropdown-item">
+                        <span class="dropdown-icon">📥</span>
+                        <span>Export Data</span>
+                    </a>
+                    <a href="/help" class="dropdown-item">
+                        <span class="dropdown-icon">❓</span>
+                        <span>Help & Support</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button onclick="logout()" class="dropdown-item dropdown-item-danger">
+                        <span class="dropdown-icon">🚪</span>
+                        <span>Logout</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -61,28 +102,120 @@
 // Mobile menu toggle
 document.getElementById('mobileMenuToggle')?.addEventListener('click', function() {
     document.getElementById('navLinks').classList.toggle('active');
+    this.classList.toggle('active');
 });
 
 // User dropdown toggle
-document.getElementById('userMenuBtn')?.addEventListener('click', function() {
+document.getElementById('userMenuBtn')?.addEventListener('click', function(e) {
+    e.stopPropagation();
     document.getElementById('userDropdown').classList.toggle('active');
+    document.getElementById('notificationDropdown').classList.remove('active');
 });
 
-// Close dropdown when clicking outside
+// Notification dropdown toggle
+document.getElementById('notificationBtn')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('notificationDropdown').classList.toggle('active');
+    document.getElementById('userDropdown').classList.remove('active');
+});
+
+// Close dropdowns when clicking outside
 document.addEventListener('click', function(e) {
-    if (!e.target.closest('.user-menu')) {
+    if (!e.target.closest('.user-menu') && !e.target.closest('.notification-menu')) {
         document.getElementById('userDropdown')?.classList.remove('active');
+        document.getElementById('notificationDropdown')?.classList.remove('active');
     }
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('#navLinks a').forEach(link => {
+    link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('active');
+        document.getElementById('mobileMenuToggle').classList.remove('active');
+    });
 });
 
 // Logout function
 async function logout() {
     try {
+        showLoadingState();
         await fetch('/auth/logout', { method: 'POST' });
         localStorage.removeItem('auth_token');
         window.location.href = '/auth/login';
     } catch (error) {
         console.error('Logout failed:', error);
+        Toast.error('Logout failed. Please try again.');
+    } finally {
+        hideLoadingState();
     }
 }
+
+// Show loading state
+function showLoadingState() {
+    const logoutBtn = document.querySelector('.dropdown-item-danger');
+    if (logoutBtn) {
+        logoutBtn.innerHTML = '<span class="spinner spinner-sm"></span> Logging out...';
+        logoutBtn.disabled = true;
+    }
+}
+
+// Hide loading state
+function hideLoadingState() {
+    const logoutBtn = document.querySelector('.dropdown-item-danger');
+    if (logoutBtn) {
+        logoutBtn.innerHTML = '<span class="dropdown-icon">🚪</span> Logout';
+        logoutBtn.disabled = false;
+    }
+}
+
+// Simulate notification updates
+function updateNotifications() {
+    const notificationCount = document.getElementById('notificationCount');
+    const notificationList = document.getElementById('notificationList');
+    
+    // Simulate new notifications
+    const notifications = [
+        { message: "Your monthly budget report is ready", time: "5 minutes ago" },
+        { message: "New transaction added successfully", time: "1 hour ago" },
+        { message: "Reminder: Review your budget", time: "1 day ago" }
+    ];
+    
+    // Update count
+    notificationCount.textContent = notifications.length;
+    notificationCount.style.display = notifications.length > 0 ? 'flex' : 'none';
+    
+    // Update list
+    notificationList.innerHTML = '';
+    notifications.forEach(notification => {
+        const item = document.createElement('div');
+        item.className = 'notification-item';
+        item.innerHTML = `
+            <p>${notification.message}</p>
+            <span class="notification-time">${notification.time}</span>
+        `;
+        notificationList.appendChild(item);
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Update user info (in a real app, this would come from the server)
+    const userName = document.getElementById('userName');
+    const userEmail = document.getElementById('userEmail');
+    
+    if (userName && userEmail) {
+        userName.textContent = localStorage.getItem('userName') || 'User Name';
+        userEmail.textContent = localStorage.getItem('userEmail') || 'user@example.com';
+    }
+    
+    // Update notifications
+    updateNotifications();
+    
+    // Clear notifications button
+    document.querySelector('.clear-notifications')?.addEventListener('click', function() {
+        document.getElementById('notificationList').innerHTML = '<div class="no-notifications">No new notifications</div>';
+        document.getElementById('notificationCount').style.display = 'none';
+        Toast.success('Notifications cleared');
+    });
+});
 </script>

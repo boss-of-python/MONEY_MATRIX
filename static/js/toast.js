@@ -14,31 +14,32 @@ class Toast {
         setTimeout(() => toast.classList.add('show'), 10);
         
         // Auto-remove after duration
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, duration);
+        if (duration > 0) {
+            setTimeout(() => {
+                this.removeToast(toast);
+            }, duration);
+        }
+        
+        // Add close button functionality
+        const closeBtn = toast.querySelector('.toast-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.removeToast(toast));
+        }
+        
+        return toast;
     }
 
     static createContainer() {
         const container = document.createElement('div');
         container.id = 'toast-container';
-        container.style.cssText = `
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1200;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        `;
+        container.className = 'toast-container';
         document.body.appendChild(container);
         return container;
     }
 
     static createToast(message, type) {
         const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
+        toast.className = `toast toast-${type} glass-effect`;
         
         const icons = {
             success: '✓',
@@ -54,80 +55,66 @@ class Toast {
             info: '#3B82F6'
         };
 
-        toast.style.cssText = `
-            background: var(--color-card);
-            color: var(--color-text);
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid ${colors[type]};
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            min-width: 300px;
-            max-width: 500px;
-            opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.3s ease;
-        `;
-
         toast.innerHTML = `
-            <span style="
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                background: ${colors[type]};
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                flex-shrink: 0;
-            ">${icons[type]}</span>
-            <span style="flex: 1;">${message}</span>
-            <button onclick="this.parentElement.remove()" style="
-                background: none;
-                border: none;
-                color: var(--color-text-secondary);
-                cursor: pointer;
-                font-size: 1.25rem;
-                padding: 0;
-                width: 20px;
-                height: 20px;
-            ">×</button>
+            <div class="toast-icon">${icons[type]}</div>
+            <div class="toast-content">
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">&times;</button>
         `;
 
-        toast.classList.add('toast');
+        // Add hover pause functionality
+        let timeoutId;
+        toast.addEventListener('mouseenter', () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        });
+        
+        toast.addEventListener('mouseleave', () => {
+            timeoutId = setTimeout(() => {
+                this.removeToast(toast);
+            }, 2000);
+        });
         
         return toast;
     }
 
+    static removeToast(toast) {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }
+
     static success(message, duration) {
-        this.show(message, 'success', duration);
+        return this.show(message, 'success', duration);
     }
 
     static error(message, duration) {
-        this.show(message, 'error', duration);
+        return this.show(message, 'error', duration);
     }
 
     static warning(message, duration) {
-        this.show(message, 'warning', duration);
+        return this.show(message, 'warning', duration);
     }
 
     static info(message, duration) {
-        this.show(message, 'info', duration);
+        return this.show(message, 'info', duration);
+    }
+    
+    static loading(message = 'Loading...', duration = 0) {
+        const toast = this.show(`
+            <div class="toast-loading">
+                <div class="spinner spinner-sm"></div>
+                <span>${message}</span>
+            </div>
+        `, 'info', duration);
+        
+        toast.classList.add('toast-loading-container');
+        return toast;
     }
 }
-
-// Add CSS for toast show animation
-const style = document.createElement('style');
-style.textContent = `
-    .toast.show {
-        opacity: 1 !important;
-        transform: translateX(0) !important;
-    }
-`;
-document.head.appendChild(style);
 
 // Export Toast globally
 window.Toast = Toast;

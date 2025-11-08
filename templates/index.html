@@ -4,44 +4,112 @@
 
 {% block content %}
 <div class="landing-page">
+    <!-- Hero Section -->
     <div class="hero-section">
-        <div class="hero-content glass-effect">
-            <h1 class="hero-title">Money Matrix</h1>
+        <div class="hero-content glass-card card-swirl animate-float">
+            <h1 class="hero-title text-gradient">Money Matrix</h1>
             <p class="hero-subtitle">Your Personal Finance Command Center</p>
             <p class="hero-description">
                 Track expenses, set budgets, and gain insights into your financial health.
                 100% free, no hidden costs.
             </p>
             <div class="hero-actions">
-                <a href="/auth/register" class="btn btn-primary btn-lg">Get Started</a>
-                <a href="/auth/login" class="btn btn-secondary btn-lg">Login</a>
+                <a href="/auth/register" class="btn btn-primary btn-lg btn-holographic hover-pop">Get Started</a>
+                <a href="/auth/login" class="btn btn-secondary btn-lg hover-pop">Login</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Active Users</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">$50M+</span>
+                    <span class="stat-label">Transactions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
             </div>
         </div>
     </div>
     
+    <!-- Features Section -->
     <div class="features-section">
-        <h2 class="section-title">Why Money Matrix?</h2>
-        <div class="features-grid">
-            <div class="feature-card glass-effect">
-                <div class="feature-icon">📊</div>
+        <h2 class="section-title animate-float">Why Money Matrix?</h2>
+        <div class="features-grid staggered-children">
+            <div class="feature-card glass-card card-holographic hover-distortion">
+                <div class="feature-icon animate-wave">📊</div>
                 <h3>Real-Time Analytics</h3>
                 <p>Visual insights into your spending patterns and trends</p>
             </div>
-            <div class="feature-card glass-effect">
-                <div class="feature-icon">🎯</div>
+            <div class="feature-card glass-card card-holographic hover-distortion">
+                <div class="feature-icon animate-wave">🎯</div>
                 <h3>Smart Budgeting</h3>
                 <p>Set budgets and get alerts before you overspend</p>
             </div>
-            <div class="feature-card glass-effect">
-                <div class="feature-icon">🤖</div>
+            <div class="feature-card glass-card card-holographic hover-distortion">
+                <div class="feature-icon animate-wave">🤖</div>
                 <h3>AI Categorization</h3>
                 <p>Automatic transaction categorization with machine learning</p>
             </div>
-            <div class="feature-card glass-effect">
-                <div class="feature-icon">🔒</div>
+            <div class="feature-card glass-card card-holographic hover-distortion">
+                <div class="feature-icon animate-wave">🔒</div>
                 <h3>Secure & Private</h3>
                 <p>Your data is encrypted and stored securely</p>
             </div>
+        </div>
+    </div>
+    
+    <!-- Testimonials Section -->
+    <div class="testimonials-section">
+        <h2 class="section-title">What Our Users Say</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-card glass-card">
+                <div class="testimonial-content">
+                    <p>"Money Matrix helped me save $5,000 in just 6 months by showing me where my money was actually going."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <h4>John Doe</h4>
+                        <p>Financial Analyst</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass-card">
+                <div class="testimonial-content">
+                    <p>"The AI categorization is incredible. It automatically sorted my transactions better than I could have done manually."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SJ</div>
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Small Business Owner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass-card">
+                <div class="testimonial-content">
+                    <p>"Finally, a budgeting app that doesn't feel like work. The interface is beautiful and intuitive."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div class="author-info">
+                        <h4>Mike Rodriguez</h4>
+                        <p>Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <div class="cta-content glass-card card-swirl">
+            <h2 class="cta-title">Ready to Take Control of Your Finances?</h2>
+            <p class="cta-description">Join thousands of users who have transformed their financial habits with Money Matrix.</p>
+            <a href="/auth/register" class="btn btn-primary btn-lg btn-holographic hover-pop">Start Your Journey</a>
         </div>
     </div>
 </div>
@@ -49,6 +117,21 @@
 <style>
 .landing-page {
     min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated Background */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+    z-index: -1;
+    animation: float 20s ease-in-out infinite;
 }
 
 .hero-section {
@@ -57,6 +140,7 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    position: relative;
 }
 
 .hero-content {
@@ -64,21 +148,22 @@
     padding: 3rem;
     max-width: 800px;
     animation: fadeIn 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-title {
     font-size: 4rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 800;
     margin-bottom: 1rem;
+    letter-spacing: -0.03em;
 }
 
 .hero-subtitle {
     font-size: 1.5rem;
     color: var(--color-text);
     margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .hero-description {
@@ -93,11 +178,38 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
 }
 
 .features-section {
     padding: 4rem 2rem;
     background: var(--color-bg-secondary);
+    position: relative;
 }
 
 .section-title {
@@ -105,6 +217,17 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    margin: 0.5rem auto;
+    border-radius: 2px;
 }
 
 .features-grid {
@@ -118,16 +241,20 @@
 .feature-card {
     padding: 2rem;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .feature-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    display: inline-block;
 }
 
 .feature-card h3 {
@@ -141,6 +268,149 @@
     line-height: 1.5;
 }
 
+/* Testimonials Section */
+.testimonials-section {
+    padding: 4rem 2rem;
+    position: relative;
+}
+
+.testimonials-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-content {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-content p {
+    font-style: italic;
+    line-height: 1.6;
+    position: relative;
+}
+
+.testimonial-content p::before {
+    content: '"';
+    font-size: 4rem;
+    position: absolute;
+    top: -1.5rem;
+    left: -1rem;
+    color: var(--color-primary-light);
+    opacity: 0.2;
+    font-family: Georgia, serif;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.author-info h4 {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.author-info p {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.cta-description {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Footer */
+.footer {
+    background: var(--color-card);
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-primary);
+}
+
+.copyright {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
@@ -149,6 +419,107 @@
     .hero-subtitle {
         font-size: 1.25rem;
     }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-title {
+        font-size: 1.5rem;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Animation Delays for Staggered Effects */
+.staggered-children > *:nth-child(1) { animation-delay: 0.1s; }
+.staggered-children > *:nth-child(2) { animation-delay: 0.2s; }
+.staggered-children > *:nth-child(3) { animation-delay: 0.3s; }
+.staggered-children > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* On scroll animations */
+.js-scroll {
+    opacity: 0;
+    transition: opacity 500ms, transform 500ms;
+}
+
+.js-scroll.scrolled {
+    opacity: 1;
+}
+
+.js-scroll.slide-left {
+    transform: translateX(-200px);
+}
+
+.js-scroll.slide-right {
+    transform: translateX(200px);
+}
+
+.js-scroll.scrolled.slide-left,
+.js-scroll.scrolled.slide-right {
+    transform: translateX(0);
 }
 </style>
+
+<script>
+// Initialize staggered animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Trigger staggered animations
+    const staggeredContainers = document.querySelectorAll('.staggered-children');
+    staggeredContainers.forEach(container => {
+        setTimeout(() => {
+            container.classList.add('animate');
+        }, 300);
+    });
+    
+    // Initialize scroll animations
+    const scrollElements = document.querySelectorAll('.js-scroll');
+    
+    const elementInView = (el, dividend = 1) => {
+        const elementTop = el.getBoundingClientRect().top;
+        return (
+            elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+        );
+    };
+    
+    const displayScrollElement = (element) => {
+        element.classList.add('scrolled');
+    };
+    
+    const hideScrollElement = (element) => {
+        element.classList.remove('scrolled');
+    };
+    
+    const handleScrollAnimation = () => {
+        scrollElements.forEach((el) => {
+            if (elementInView(el, 1.25)) {
+                displayScrollElement(el);
+            } else {
+                hideScrollElement(el);
+            }
+        });
+    };
+    
+    // Trigger on load
+    handleScrollAnimation();
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', () => {
+        handleScrollAnimation();
+    });
+});
+</script>
 {% endblock %}
