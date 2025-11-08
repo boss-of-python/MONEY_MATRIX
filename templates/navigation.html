@@ -1,0 +1,88 @@
+<nav class="navbar glass-effect">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="/" class="nav-logo">
+            <span class="logo-icon">💰</span>
+            <span class="logo-text">Money Matrix</span>
+        </a>
+        
+        <!-- Navigation Links (Desktop) -->
+        <div class="nav-links" id="navLinks">
+            <a href="/dashboard" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="/transactions" class="nav-link">
+                <span class="nav-icon">💸</span>
+                <span>Transactions</span>
+            </a>
+            <a href="/budgets" class="nav-link">
+                <span class="nav-icon">🎯</span>
+                <span>Budgets</span>
+            </a>
+            <a href="/analytics" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span>Analytics</span>
+            </a>
+            <a href="/settings" class="nav-link">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </div>
+        
+        <!-- User Menu -->
+        <div class="nav-actions">
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+            
+            <!-- User Menu -->
+            <div class="user-menu">
+                <button class="user-btn" id="userMenuBtn">
+                    <span class="user-avatar">U</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="/settings" class="dropdown-item">⚙️ Settings</a>
+                    <a href="/export" class="dropdown-item">📥 Export Data</a>
+                    <button onclick="logout()" class="dropdown-item">🚪 Logout</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <span class="hamburger"></span>
+        </button>
+    </div>
+</nav>
+
+<script>
+// Mobile menu toggle
+document.getElementById('mobileMenuToggle')?.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('active');
+});
+
+// User dropdown toggle
+document.getElementById('userMenuBtn')?.addEventListener('click', function() {
+    document.getElementById('userDropdown').classList.toggle('active');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.user-menu')) {
+        document.getElementById('userDropdown')?.classList.remove('active');
+    }
+});
+
+// Logout function
+async function logout() {
+    try {
+        await fetch('/auth/logout', { method: 'POST' });
+        localStorage.removeItem('auth_token');
+        window.location.href = '/auth/login';
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+}
+</script>

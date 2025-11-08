@@ -1,0 +1,11 @@
+{
+  "name": "auth",
+  "display_name": "Authentication",
+  "version": "1.0.0",
+  "description": "Firebase-based user authentication with email/password and Google Sign-In",
+  "enabled": true,
+  "dependencies": [],
+  "priority": 1,
+  "url_prefix": "/auth",
+  "requires_auth": false
+}

@@ -1,0 +1,14 @@
+{
+  "name": "sync",
+  "display_name": "Cloud Sync",
+  "version": "1.0.0",
+  "description": "Synchronize data between local storage and Firebase Firestore",
+  "enabled": true,
+  "dependencies": [],
+  "routes": [
+    "/sync/api/status",
+    "/sync/api/push",
+    "/sync/api/pull",
+    "/sync/api/auto-sync"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "analytics",
+    "display_name": "Analytics",
+    "description": "Financial analytics and insights",
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": []
+}

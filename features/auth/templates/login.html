@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container glass-effect">
+        <div class="auth-header">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Login to your Money Matrix account</p>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="input" 
+                    placeholder="your@email.com" 
+                    required
+                    autocomplete="email"
+                >
+                <div class="form-error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="input" 
+                    placeholder="••••••••" 
+                    required
+                    autocomplete="current-password"
+                >
+                <div class="form-error" id="passwordError"></div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/auth/reset-password" class="link-text">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                Login
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <span>or</span>
+        </div>
+
+        <button class="btn btn-secondary btn-block" id="googleLoginBtn">
+            <span>🔐</span>
+            Continue with Google
+        </button>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="/auth/register" class="link-primary">Sign up</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--color-text-secondary);
+}
+
+.auth-form {
+    margin-bottom: 1.5rem;
+}
+
+.form-actions {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.link-text {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.auth-divider {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.auth-divider::before { left: 0; }
+.auth-divider::after { right: 0; }
+
+.auth-divider span {
+    padding: 0 1rem;
+    background: var(--color-card);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+.link-primary {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+</style>
+
+<script type="module">
+import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, isConfigured, onAuthStateChanged } from '/static/js/firebase-config.js';
+
+// Only check auth state if Firebase is properly configured
+if (isConfigured && auth) {
+    // Check if already logged in and redirect silently
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Already logged in, redirect to dashboard without showing the page
+            window.location.replace('/dashboard/');
+        }
+    });
+} else {
+    // Firebase not configured - show info message
+    console.log('Firebase not configured - authentication features disabled');
+    if (window.Toast) {
+        Toast.info('Demo Mode: Firebase authentication not configured');
+    }
+}
+
+if (!isConfigured && window.Toast) {
+    Toast.error('Firebase is not configured. Please set up your Firebase credentials.');
+}
+
+const loginForm = document.getElementById('loginForm');
+const googleLoginBtn = document.getElementById('googleLoginBtn');
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const loginBtn = document.getElementById('loginBtn');
+    
+    // Clear previous errors
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('passwordError').textContent = '';
+    
+    if (!isConfigured) {
+        Toast.error('Firebase is not configured');
+        return;
+    }
+    
+    try {
+        loginBtn.textContent = 'Logging in...';
+        loginBtn.disabled = true;
+        
+        // Sign in with Firebase
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const idToken = await userCredential.user.getIdToken();
+        
+        // Verify token with backend
+        const response = await fetch('/auth/api/verify-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: idToken })
+        });
+        
+        if (response.ok) {
+            localStorage.setItem('auth_token', idToken);
+            localStorage.setItem('user_email', email);
+            Toast.success('Login successful!');
+            // Redirect to dashboard (replace to prevent back button issues)
+            window.location.replace('/dashboard/');
+        } else {
+            throw new Error('Token verification failed');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        let errorMessage = 'Login failed';
+        
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+            errorMessage = 'Invalid email or password';
+            document.getElementById('emailError').textContent = errorMessage;
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'Invalid email address';
+            document.getElementById('emailError').textContent = errorMessage;
+        } else if (error.code === 'auth/user-disabled') {
+            errorMessage = 'This account has been disabled';
+            document.getElementById('emailError').textContent = errorMessage;
+        } else if (error.code === 'auth/invalid-credential') {
+            errorMessage = 'Invalid email or password';
+            document.getElementById('emailError').textContent = errorMessage;
+        }
+        
+        Toast.error(errorMessage);
+        loginBtn.textContent = 'Login';
+        loginBtn.disabled = false;
+    }
+});
+
+googleLoginBtn.addEventListener('click', async () => {
+    if (!isConfigured) {
+        Toast.error('Firebase is not configured');
+        return;
+    }
+    
+    try {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        
+        // Get ID token
+        const idToken = await result.user.getIdToken();
+        
+        // Verify token with backend
+        const response = await fetch('/auth/api/verify-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: idToken })
+        });
+        
+        if (response.ok) {
+            localStorage.setItem('auth_token', idToken);
+            localStorage.setItem('user_email', result.user.email);
+            Toast.success('Logged in with Google!');
+            window.location.replace('/dashboard/');
+        } else {
+            // User might not be registered, try to register them
+            const registerResponse = await fetch('/auth/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: result.user.email,
+                    password: 'google-oauth-user',
+                    display_name: result.user.displayName
+                })
+            });
+            
+            if (registerResponse.ok) {
+                localStorage.setItem('auth_token', idToken);
+                localStorage.setItem('user_email', result.user.email);
+                Toast.success('Account created and logged in!');
+                window.location.replace('/dashboard/');
+            } else {
+                throw new Error('Registration failed');
+            }
+        }
+    } catch (error) {
+        console.error('Google login error:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+            Toast.info('Sign-in cancelled');
+        } else if (error.code === 'auth/popup-blocked') {
+            Toast.error('Popup blocked. Please allow popups for this site.');
+        } else {
+            Toast.error(error.message || 'Google login failed');
+        }
+    }
+});
+</script>
+{% endblock %}

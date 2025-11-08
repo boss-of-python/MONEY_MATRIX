@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container glass-effect">
+        <div class="auth-header">
+            <h1 class="auth-title">Create Account</h1>
+            <p class="auth-subtitle">Join Money Matrix and take control of your finances</p>
+        </div>
+
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="displayName" class="form-label">Full Name</label>
+                <input 
+                    type="text" 
+                    id="displayName" 
+                    name="displayName" 
+                    class="input" 
+                    placeholder="John Doe" 
+                    required
+                    autocomplete="name"
+                >
+                <div class="form-error" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="input" 
+                    placeholder="your@email.com" 
+                    required
+                    autocomplete="email"
+                >
+                <div class="form-error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="input" 
+                    placeholder="••••••••" 
+                    required
+                    autocomplete="new-password"
+                >
+                <div class="form-error" id="passwordError"></div>
+                <div class="form-hint">Must be at least 8 characters with uppercase, lowercase, and number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    class="input" 
+                    placeholder="••••••••" 
+                    required
+                    autocomplete="new-password"
+                >
+                <div class="form-error" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="registerBtn">
+                Create Account
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <span>or</span>
+        </div>
+
+        <button class="btn btn-secondary btn-block" id="googleRegisterBtn">
+            <span>🔐</span>
+            Sign up with Google
+        </button>
+
+        <div class="auth-footer">
+            <p>Already have an account? <a href="/auth/login" class="link-primary">Login</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--color-text-secondary);
+}
+
+.auth-form {
+    margin-bottom: 1.5rem;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.auth-divider {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.auth-divider::before { left: 0; }
+.auth-divider::after { right: 0; }
+
+.auth-divider span {
+    padding: 0 1rem;
+    background: var(--color-card);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+.link-primary {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+</style>
+
+<script type="module">
+import { auth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, onAuthStateChanged } from '/static/js/firebase-config.js';
+
+// Only check auth if Firebase is configured
+if (auth) {
+    // Check if already logged in and redirect silently
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Already logged in, redirect to dashboard without showing the page
+            window.location.replace('/dashboard/');
+        }
+    });
+}
+
+const registerForm = document.getElementById('registerForm');
+const googleRegisterBtn = document.getElementById('googleRegisterBtn');
+
+registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const displayName = document.getElementById('displayName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const registerBtn = document.getElementById('registerBtn');
+    
+    // Clear previous errors
+    document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+    
+    // Validate passwords match
+    if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+        return;
+    }
+    
+    try {
+        registerBtn.textContent = 'Creating Account...';
+        registerBtn.disabled = true;
+        
+        // Create user with Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        
+        // Update profile with display name
+        await updateProfile(userCredential.user, {
+            displayName: displayName
+        });
+        
+        // Get ID token and send to backend
+        const idToken = await userCredential.user.getIdToken();
+        
+        const response = await fetch('/auth/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                display_name: displayName
+            })
+        });
+        
+        if (response.ok) {
+            localStorage.setItem('auth_token', idToken);
+            Toast.success('Account created successfully!');
+            window.location.replace('/dashboard/');
+        } else {
+            const data = await response.json();
+            Toast.error(data.error || 'Registration failed');
+            registerBtn.textContent = 'Create Account';
+            registerBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Registration error:', error);
+        let errorMessage = 'Registration failed';
+        
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = 'Email already registered';
+            document.getElementById('emailError').textContent = errorMessage;
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = 'Password is too weak (min 6 characters)';
+            document.getElementById('passwordError').textContent = errorMessage;
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = 'Invalid email address';
+            document.getElementById('emailError').textContent = errorMessage;
+        }
+        
+        Toast.error(errorMessage);
+        registerBtn.textContent = 'Create Account';
+        registerBtn.disabled = false;
+    }
+});
+
+googleRegisterBtn.addEventListener('click', async () => {
+    try {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        
+        // Get ID token and send to backend
+        const idToken = await result.user.getIdToken();
+        
+        const response = await fetch('/auth/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: result.user.email,
+                password: 'google-oauth-user',
+                display_name: result.user.displayName
+            })
+        });
+        
+        localStorage.setItem('auth_token', idToken);
+        Toast.success('Signed up with Google!');
+        window.location.replace('/dashboard/');
+    } catch (error) {
+        console.error('Google sign-up error:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+            Toast.info('Sign-up cancelled');
+        } else if (error.code === 'auth/popup-blocked') {
+            Toast.error('Popup blocked. Please allow popups for this site.');
+        } else {
+            Toast.error(error.message || 'Google sign-up failed');
+        }
+    }
+});
+</script>
+{% endblock %}

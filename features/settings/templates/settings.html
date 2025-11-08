@@ -1,0 +1,446 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Money Matrix{% endblock %}
+
+{% block content %}
+<!-- Loading state -->
+<div class="loading-container" id="loadingState">
+    <div class="loading-spinner"></div>
+    <p>Loading settings...</p>
+</div>
+
+<div class="settings-page" id="settingsContent" style="display: none;">
+    <h1>Settings</h1>
+    
+    <div class="settings-grid">
+        <!-- Cloud Sync Section -->
+        <div class="settings-card glass-effect">
+            <h2>☁️ Cloud Sync</h2>
+            <p class="card-description">Synchronize your data across devices using Firebase Firestore</p>
+            
+            <div id="syncStatus" class="sync-status">
+                <div class="status-item">
+                    <span class="status-label">Status:</span>
+                    <span id="syncStatusText" class="status-value">Checking...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Last Sync:</span>
+                    <span id="lastSyncTime" class="status-value">Never</span>
+                </div>
+            </div>
+            
+            <!-- Firestore Setup Instructions (hidden by default) -->
+            <div id="firestoreSetupMessage" class="alert alert-info" style="display: none; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0;">📋 Enable Cloud Sync</h3>
+                <p>Cloud Firestore API is not enabled yet. Follow these steps:</p>
+                <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                    <li>Click: <a href="https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=money-matrix-6d87d" target="_blank" style="color: var(--color-primary); text-decoration: underline;">Enable Firestore API</a></li>
+                    <li>Wait 1-2 minutes for activation</li>
+                    <li>Go to <a href="https://console.firebase.google.com/project/money-matrix-6d87d/firestore" target="_blank" style="color: var(--color-primary); text-decoration: underline;">Firebase Console</a></li>
+                    <li>Click "Create Database" → "Start in test mode"</li>
+                    <li>Refresh this page</li>
+                </ol>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" id="pushToCloudBtn">
+                    <span>⬆️</span> Push to Cloud
+                </button>
+                <button class="btn btn-secondary" id="pullFromCloudBtn">
+                    <span>⬇️</span> Pull from Cloud
+                </button>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>What gets synced:</strong></p>
+                <ul>
+                    <li>✓ All transactions</li>
+                    <li>✓ Budget configurations</li>
+                    <li>✓ User preferences</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- User Preferences Section -->
+        <div class="settings-card glass-effect">
+            <h2>⚙️ Preferences</h2>
+            <p class="card-description">Customize your Money Matrix experience</p>
+            
+            <div class="form-group">
+                <label for="theme">Theme</label>
+                <select id="theme" class="input">
+                    <option value="auto">Auto (System)</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="currency">Currency</label>
+                <select id="currency" class="input">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="JPY">JPY (¥)</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" id="savePreferencesBtn">Save Preferences</button>
+        </div>
+        
+        <!-- Account Info Section -->
+        <div class="settings-card glass-effect">
+            <h2>👤 Account</h2>
+            <p class="card-description">Your account information</p>
+            
+            <div class="account-info">
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span id="userEmail" class="info-value">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">User ID:</span>
+                    <span id="userId" class="info-value">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.settings-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.settings-page h1 {
+    margin-bottom: 2rem;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.settings-card {
+    padding: 2rem;
+}
+
+.settings-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.card-description {
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.sync-status {
+    background: var(--color-bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.status-label {
+    font-weight: 600;
+}
+
+.status-value {
+    color: var(--color-text-secondary);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.button-group .btn {
+    flex: 1;
+}
+
+.info-box {
+    background: var(--color-bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primary);
+}
+
+.info-box ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.info-box li {
+    margin: 0.25rem 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.account-info {
+    background: var(--color-bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+}
+
+.info-value {
+    color: var(--color-text-secondary);
+    word-break: break-all;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-left-color: #3b82f6;
+    color: var(--color-text-primary);
+}
+
+.alert h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.alert a {
+    font-weight: 600;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
+
+<script type="module">
+import { auth, onAuthStateChanged, isConfigured } from '/static/js/firebase-config.js';
+
+let currentUser = null;
+
+// Only check auth if Firebase is configured
+if (isConfigured && auth) {
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            currentUser = user;
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('settingsContent').style.display = 'block';
+            await loadSettings();
+        } else {
+            window.location.replace('/auth/login');
+        }
+    });
+} else {
+    // Demo mode
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('settingsContent').style.display = 'block';
+    loadDemoSettings();
+}
+
+async function loadSettings() {
+    // Load user info
+    document.getElementById('userEmail').textContent = currentUser.email;
+    document.getElementById('userId').textContent = currentUser.uid;
+    
+    // Load sync status
+    await loadSyncStatus();
+}
+
+function loadDemoSettings() {
+    document.getElementById('userEmail').textContent = 'demo@example.com';
+    document.getElementById('userId').textContent = 'demo-user-id';
+    document.getElementById('syncStatusText').textContent = 'Unavailable (Demo Mode)';
+}
+
+async function loadSyncStatus() {
+    try {
+        const token = await currentUser.getIdToken();
+        const response = await fetch('/sync/api/status', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success && result.data.enabled) {
+            document.getElementById('syncStatusText').textContent = 'Available ✓';
+            document.getElementById('syncStatusText').style.color = '#10b981';
+            if (result.data.last_sync) {
+                const date = new Date(result.data.last_sync);
+                document.getElementById('lastSyncTime').textContent = date.toLocaleString();
+            }
+            // Hide setup message
+            document.getElementById('firestoreSetupMessage').style.display = 'none';
+        } else {
+            document.getElementById('syncStatusText').textContent = 'Not Enabled';
+            document.getElementById('syncStatusText').style.color = '#ef4444';
+            // Show setup instructions
+            document.getElementById('firestoreSetupMessage').style.display = 'block';
+            // Disable sync buttons
+            document.getElementById('pushToCloudBtn').disabled = true;
+            document.getElementById('pullFromCloudBtn').disabled = true;
+        }
+    } catch (error) {
+        console.error('Error loading sync status:', error);
+        document.getElementById('syncStatusText').textContent = 'Error';
+        document.getElementById('syncStatusText').style.color = '#ef4444';
+        // Show setup instructions on error
+        document.getElementById('firestoreSetupMessage').style.display = 'block';
+    }
+}
+
+// Push to cloud
+document.getElementById('pushToCloudBtn').addEventListener('click', async () => {
+    if (!currentUser) {
+        if (window.Toast) Toast.info('Only available for authenticated users');
+        return;
+    }
+    
+    try {
+        const btn = document.getElementById('pushToCloudBtn');
+        btn.disabled = true;
+        btn.textContent = 'Syncing...';
+        
+        const token = await currentUser.getIdToken();
+        const response = await fetch('/sync/api/push', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            if (window.Toast) {
+                const stats = result.data.stats;
+                Toast.success(`Synced: ${stats.transactions} transactions, ${stats.budgets} budgets, ${stats.settings} settings`);
+            }
+            await loadSyncStatus();
+        } else {
+            if (window.Toast) Toast.error(result.error || 'Sync failed');
+        }
+    } catch (error) {
+        console.error('Sync error:', error);
+        if (window.Toast) Toast.error('Failed to sync to cloud');
+    } finally {
+        const btn = document.getElementById('pushToCloudBtn');
+        btn.disabled = false;
+        btn.innerHTML = '<span>⬆️</span> Push to Cloud';
+    }
+});
+
+// Pull from cloud
+document.getElementById('pullFromCloudBtn').addEventListener('click', async () => {
+    if (!currentUser) {
+        if (window.Toast) Toast.info('Only available for authenticated users');
+        return;
+    }
+    
+    if (!confirm('This will merge cloud data with your local data. Continue?')) {
+        return;
+    }
+    
+    try {
+        const btn = document.getElementById('pullFromCloudBtn');
+        btn.disabled = true;
+        btn.textContent = 'Pulling...';
+        
+        const token = await currentUser.getIdToken();
+        const response = await fetch('/sync/api/pull', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            if (window.Toast) {
+                const stats = result.data.stats;
+                Toast.success(`Pulled: ${stats.transactions} transactions, ${stats.budgets} budgets, ${stats.settings} settings`);
+            }
+            await loadSyncStatus();
+        } else {
+            if (window.Toast) Toast.error(result.error || 'Pull failed');
+        }
+    } catch (error) {
+        console.error('Pull error:', error);
+        if (window.Toast) Toast.error('Failed to pull from cloud');
+    } finally {
+        const btn = document.getElementById('pullFromCloudBtn');
+        btn.disabled = false;
+        btn.innerHTML = '<span>⬇️</span> Pull from Cloud';
+    }
+});
+
+// Save preferences
+document.getElementById('savePreferencesBtn').addEventListener('click', () => {
+    const theme = document.getElementById('theme').value;
+    const currency = document.getElementById('currency').value;
+    
+    // Save to localStorage
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('currency', currency);
+    
+    // Apply theme
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    if (window.Toast) Toast.success('Preferences saved');
+});
+
+// Load saved preferences
+const savedTheme = localStorage.getItem('theme') || 'auto';
+const savedCurrency = localStorage.getItem('currency') || 'USD';
+document.getElementById('theme').value = savedTheme;
+document.getElementById('currency').value = savedCurrency;
+</script>
+{% endblock %}

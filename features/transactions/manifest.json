@@ -1,0 +1,8 @@
+{
+    "name": "transactions",
+    "display_name": "Transactions",
+    "description": "Transaction management - add, edit, delete and view transactions",
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": []
+}

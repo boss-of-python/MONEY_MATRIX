@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <div class="hero-section">
+        <div class="hero-content glass-effect">
+            <h1 class="hero-title">Money Matrix</h1>
+            <p class="hero-subtitle">Your Personal Finance Command Center</p>
+            <p class="hero-description">
+                Track expenses, set budgets, and gain insights into your financial health.
+                100% free, no hidden costs.
+            </p>
+            <div class="hero-actions">
+                <a href="/auth/register" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="/auth/login" class="btn btn-secondary btn-lg">Login</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <h2 class="section-title">Why Money Matrix?</h2>
+        <div class="features-grid">
+            <div class="feature-card glass-effect">
+                <div class="feature-icon">📊</div>
+                <h3>Real-Time Analytics</h3>
+                <p>Visual insights into your spending patterns and trends</p>
+            </div>
+            <div class="feature-card glass-effect">
+                <div class="feature-icon">🎯</div>
+                <h3>Smart Budgeting</h3>
+                <p>Set budgets and get alerts before you overspend</p>
+            </div>
+            <div class="feature-card glass-effect">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Categorization</h3>
+                <p>Automatic transaction categorization with machine learning</p>
+            </div>
+            <div class="feature-card glass-effect">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your data is encrypted and stored securely</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.landing-page {
+    min-height: 100vh;
+}
+
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    text-align: center;
+    padding: 3rem;
+    max-width: 800px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.hero-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.features-section {
+    padding: 4rem 2rem;
+    background: var(--color-bg-secondary);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="error-container glass-effect">
+        <div class="error-icon">⚠️</div>
+        <h1 class="error-title">500</h1>
+        <p class="error-message">Something went wrong on our end. We're working on it!</p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">Go Home</a>
+            <button onclick="location.reload()" class="btn btn-secondary">Retry</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.error-container {
+    text-align: center;
+    padding: 3rem;
+    max-width: 500px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.error-title {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--color-error);
+    margin: 0;
+}
+
+.error-message {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin: 1rem 0 2rem;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+</style>
+{% endblock %}

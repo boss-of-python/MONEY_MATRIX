@@ -1,0 +1,11 @@
+{
+  "name": "settings",
+  "display_name": "Settings",
+  "version": "1.0.0",
+  "description": "User settings and preferences",
+  "enabled": true,
+  "dependencies": [],
+  "routes": [
+    "/settings/"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "budgets",
+    "display_name": "Budgets",
+    "description": "Budget planning and tracking",
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": []
+}
