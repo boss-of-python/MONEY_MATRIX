@@ -24,6 +24,12 @@ function initializeApp() {
     // Initialize loading states
     initializeLoadingStates();
     
+    // Initialize particles background
+    initializeParticles();
+    
+    // Initialize performance monitoring
+    initializePerformanceMonitoring();
+    
     // Log app initialization
     console.log('Money Matrix initialized');
 }
@@ -70,12 +76,19 @@ function initializeAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
+                // Add staggered animation for child elements
+                const children = entry.target.querySelectorAll('*');
+                children.forEach((child, index) => {
+                    setTimeout(() => {
+                        child.classList.add('animate-in-child');
+                    }, index * 50);
+                });
             }
         });
     }, observerOptions);
     
     // Observe elements with animation classes
-    document.querySelectorAll('.fade-in, .slide-in-up, .slide-in-down, .scale-in').forEach(el => {
+    document.querySelectorAll('.fade-in, .slide-in-up, .slide-in-down, .scale-in, .staggered-children').forEach(el => {
         observer.observe(el);
     });
 }
@@ -97,6 +110,82 @@ function initializeLoadingStates() {
             this.setAttribute('data-original-text', originalText);
         });
     });
+}
+
+/**
+ * Initialize particles background
+ */
+function initializeParticles() {
+    // Create a simple particle system for background
+    const particlesContainer = document.createElement('div');
+    particlesContainer.id = 'particles-background';
+    particlesContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    `;
+    document.body.appendChild(particlesContainer);
+    
+    // Create particles
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 5 + 1}px;
+            height: ${Math.random() * 5 + 1}px;
+            background: rgba(79, 70, 229, 0.3);
+            border-radius: 50%;
+            top: ${Math.random() * 100}%;
+            left: ${Math.random() * 100}%;
+            animation: floatParticle ${Math.random() * 10 + 10}s infinite ease-in-out;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        particlesContainer.appendChild(particle);
+    }
+    
+    // Add CSS for particle animation
+    if (!document.getElementById('particles-styles')) {
+        const style = document.createElement('style');
+        style.id = 'particles-styles';
+        style.textContent = `
+            @keyframes floatParticle {
+                0%, 100% {
+                    transform: translate(0, 0);
+                }
+                25% {
+                    transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px);
+                }
+                50% {
+                    transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
+                }
+                75% {
+                    transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+/**
+ * Initialize performance monitoring
+ */
+function initializePerformanceMonitoring() {
+    // Log performance metrics
+    if ('performance' in window) {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('Page Load Time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+                console.log('DOM Content Loaded:', perfData.domContentLoadedEventEnd - perfData.fetchStart, 'ms');
+            }, 0);
+        });
+    }
 }
 
 /**
@@ -312,5 +401,18 @@ document.addEventListener('click', function(e) {
             e.target.disabled = false;
             e.target.removeAttribute('data-original-text');
         }, 2000);
+    }
+    
+    // Add ripple effect to buttons
+    if (e.target.closest('button, .btn')) {
+        const button = e.target.closest('button, .btn');
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        button.appendChild(ripple);
+        
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
     }
 });

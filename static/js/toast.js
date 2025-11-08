@@ -26,6 +26,20 @@ class Toast {
             closeBtn.addEventListener('click', () => this.removeToast(toast));
         }
         
+        // Add hover pause functionality
+        let timeoutId;
+        toast.addEventListener('mouseenter', () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        });
+        
+        toast.addEventListener('mouseleave', () => {
+            if (duration > 0) {
+                timeoutId = setTimeout(() => {
+                    this.removeToast(toast);
+                }, 1000);
+            }
+        });
+        
         return toast;
     }
 
@@ -39,7 +53,7 @@ class Toast {
 
     static createToast(message, type) {
         const toast = document.createElement('div');
-        toast.className = `toast toast-${type} glass-effect`;
+        toast.className = `toast toast-${type} glass-effect toast-animated`;
         
         const icons = {
             success: '✓',
@@ -63,23 +77,18 @@ class Toast {
             <button class="toast-close">&times;</button>
         `;
 
-        // Add hover pause functionality
-        let timeoutId;
-        toast.addEventListener('mouseenter', () => {
-            if (timeoutId) clearTimeout(timeoutId);
-        });
-        
-        toast.addEventListener('mouseleave', () => {
-            timeoutId = setTimeout(() => {
-                this.removeToast(toast);
-            }, 2000);
-        });
+        // Add custom styling based on type
+        const icon = toast.querySelector('.toast-icon');
+        if (icon) {
+            icon.style.color = colors[type];
+        }
         
         return toast;
     }
 
     static removeToast(toast) {
         toast.classList.remove('show');
+        toast.classList.add('hide');
         setTimeout(() => {
             if (toast.parentNode) {
                 toast.parentNode.removeChild(toast);
@@ -118,3 +127,43 @@ class Toast {
 
 // Export Toast globally
 window.Toast = Toast;
+
+// Add CSS for toast animations
+document.addEventListener('DOMContentLoaded', function() {
+    if (!document.getElementById('toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+            .toast-animated {
+                animation: slideInRight 0.3s ease-out;
+            }
+            
+            .toast-animated.hide {
+                animation: slideOutRight 0.3s ease-out;
+            }
+            
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+});

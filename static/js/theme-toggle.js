@@ -17,6 +17,7 @@ class ThemeManager {
         this.setupToggle();
         this.updateIcon();
         this.addThemeTransition();
+        this.addThemeChangeEffect();
     }
 
     /**
@@ -29,6 +30,9 @@ class ThemeManager {
         document.documentElement.setAttribute('data-theme', theme);
         this.theme = theme;
         localStorage.setItem('theme', theme);
+        
+        // Add theme change ripple effect
+        this.addThemeChangeRipple();
         
         // Remove transition class after animation completes
         setTimeout(() => {
@@ -95,6 +99,15 @@ class ThemeManager {
                     this.toggle();
                 }
             });
+            
+            // Add hover effect
+            toggleBtn.addEventListener('mouseenter', () => {
+                toggleBtn.classList.add('theme-toggle-hover');
+            });
+            
+            toggleBtn.addEventListener('mouseleave', () => {
+                toggleBtn.classList.remove('theme-toggle-hover');
+            });
         }
     }
 
@@ -117,11 +130,21 @@ class ThemeManager {
             style.id = 'theme-transition-styles';
             style.textContent = `
                 .theme-transition * {
-                    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+                    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
                 }
                 
                 .theme-icon-change {
                     animation: spin 0.3s ease;
+                }
+                
+                .theme-toggle-hover {
+                    transform: scale(1.1);
+                    transition: transform 0.2s ease;
+                }
+                
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
                 }
             `;
             document.head.appendChild(style);
@@ -145,6 +168,66 @@ class ThemeManager {
                 ripple.parentNode.removeChild(ripple);
             }
         }, 600);
+    }
+    
+    /**
+     * Add theme change ripple effect across the screen
+     */
+    addThemeChangeRipple() {
+        // Create ripple effect element
+        const ripple = document.createElement('div');
+        ripple.classList.add('theme-change-ripple');
+        document.body.appendChild(ripple);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
+        }, 1000);
+    }
+    
+    /**
+     * Add theme change effect styles
+     */
+    addThemeChangeEffect() {
+        if (!document.getElementById('theme-change-effect')) {
+            const style = document.createElement('style');
+            style.id = 'theme-change-effect';
+            style.textContent = `
+                .theme-change-ripple {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    width: 0;
+                    height: 0;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.1);
+                    transform: translate(-50%, -50%);
+                    animation: rippleEffect 0.8s ease-out;
+                    pointer-events: none;
+                    z-index: 9999;
+                }
+                
+                [data-theme="dark"] .theme-change-ripple {
+                    background: rgba(0, 0, 0, 0.2);
+                }
+                
+                @keyframes rippleEffect {
+                    0% {
+                        width: 0;
+                        height: 0;
+                        opacity: 0.5;
+                    }
+                    100% {
+                        width: 200vmax;
+                        height: 200vmax;
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
 }
 

@@ -29,6 +29,9 @@
     <!-- Animated Background -->
     <div class="animated-background"></div>
     
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
     <!-- Navigation (hidden on auth pages) -->
     {% if request.path not in ['/auth/login', '/auth/register', '/auth/reset-password'] %}
     {% include 'navigation.html' %}
@@ -64,6 +67,19 @@
                         block: 'start'
                     });
                 }
+            });
+        });
+        
+        // Add loading animation to all links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    this.classList.add('link-clicked');
+                    setTimeout(() => {
+                        this.classList.remove('link-clicked');
+                    }, 300);
+                });
             });
         });
     </script>

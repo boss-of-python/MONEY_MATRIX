@@ -1,0 +1,116 @@
+Instructions for Hosting Money Matrix Web Application
+
+===============================================
+
+Option 1: GitHub Pages (Static Content Only)
+--------------------------------------------
+GitHub Pages can only host static websites, not dynamic Flask applications. However, you can use it to showcase documentation or a static landing page.
+
+1. Create a gh-pages branch:
+   git checkout -b gh-pages
+
+2. Add static content to this branch (HTML, CSS, JS files only)
+
+3. Push the branch to GitHub:
+   git push origin gh-pages
+
+4. Enable GitHub Pages in your repository settings:
+   - Go to your repository on GitHub
+   - Click Settings > Pages
+   - Select "Deploy from a branch" and choose gh-pages
+   - Save settings
+
+Note: This won't host the actual Flask application, only static content.
+
+Option 2: Heroku (Recommended for Flask Applications)
+-----------------------------------------------------
+Heroku is ideal for hosting Flask applications like Money Matrix.
+
+1. Install Heroku CLI:
+   Download from https://devcenter.heroku.com/articles/heroku-cli
+
+2. Login to Heroku:
+   heroku login
+
+3. Create a new Heroku app:
+   heroku create your-app-name
+
+4. Add a Procfile to your project root with:
+   web: gunicorn app:main
+
+5. Update requirements.txt to include gunicorn:
+   pip freeze > requirements.txt
+
+6. Commit the changes:
+   git add .
+   git commit -m "Add Heroku deployment files"
+
+7. Deploy to Heroku:
+   git push heroku main
+
+8. Set environment variables in Heroku:
+   heroku config:set SECRET_KEY=your_secret_key_here
+   heroku config:set FIREBASE_CREDENTIALS=your_firebase_credentials_path
+
+Option 3: PythonAnywhere
+------------------------
+PythonAnywhere can host Flask applications easily.
+
+1. Create an account at https://www.pythonanywhere.com/
+
+2. Upload your code using Git or direct upload
+
+3. Create a new web app and configure it to point to your app.py file
+
+4. Set up environment variables in the dashboard
+
+5. Reload the application
+
+Option 4: Google Cloud Run
+--------------------------
+Cloud Run can containerize and deploy your Flask app.
+
+1. Install Google Cloud SDK
+
+2. Create a Dockerfile in your project root:
+   FROM python:3.10-slim
+   WORKDIR /app
+   COPY requirements.txt requirements.txt
+   RUN pip install -r requirements.txt
+   COPY . .
+   EXPOSE 5000
+   CMD ["gunicorn", "app:main"]
+
+3. Build and deploy:
+   gcloud builds submit --tag gcr.io/PROJECT-ID/money-matrix
+   gcloud run deploy --image gcr.io/PROJECT-ID/money-matrix --platform managed
+
+Option 5: AWS Elastic Beanstalk
+-------------------------------
+Elastic Beanstalk supports Python applications.
+
+1. Install EB CLI
+
+2. Initialize your application:
+   eb init
+
+3. Create environment and deploy:
+   eb create
+
+4. Deploy updates:
+   eb deploy
+
+Important Notes:
+---------------
+1. Make sure to set all required environment variables in your hosting platform:
+   - SECRET_KEY
+   - FIREBASE_CREDENTIALS
+   - DATABASE_URI
+
+2. For Firebase integration to work, you'll need to upload your firebase_credentials.json file to your hosting platform and update the FIREBASE_CREDENTIALS path accordingly.
+
+3. Some hosting platforms may require modifications to the application for it to work properly. Check the specific platform's documentation for Python/Flask deployments.
+
+Recommended Starting Point:
+--------------------------
+For beginners, Heroku is the easiest option to get started with hosting your Flask application. It has a free tier that should work for development and small-scale deployments.

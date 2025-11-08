@@ -1,4 +1,4 @@
-<nav class="navbar glass-effect">
+<nav class="navbar glass-effect navbar-animated">
     <div class="nav-container">
         <!-- Logo -->
         <a href="/" class="nav-logo animate-float">
@@ -33,20 +33,20 @@
         <!-- User Menu -->
         <div class="nav-actions">
             <!-- Theme Toggle -->
-            <button id="theme-toggle" class="icon-btn hover-pop" aria-label="Toggle theme">
+            <button id="theme-toggle" class="icon-btn hover-pop theme-toggle-animated" aria-label="Toggle theme">
                 <span class="theme-icon">🌙</span>
             </button>
             
             <!-- Notifications -->
             <div class="notification-menu">
-                <button class="icon-btn hover-pop" id="notificationBtn" aria-label="Notifications">
+                <button class="icon-btn hover-pop notification-btn-animated" id="notificationBtn" aria-label="Notifications">
                     <span class="notification-icon">🔔</span>
                     <span class="notification-badge" id="notificationCount">0</span>
                 </button>
-                <div class="user-dropdown notification-dropdown" id="notificationDropdown">
+                <div class="user-dropdown notification-dropdown glass-card" id="notificationDropdown">
                     <div class="dropdown-header">
                         <h3>Notifications</h3>
-                        <button class="clear-notifications">Clear All</button>
+                        <button class="clear-notifications btn btn-sm btn-secondary">Clear All</button>
                     </div>
                     <div class="notification-list" id="notificationList">
                         <div class="notification-item">
@@ -59,10 +59,10 @@
             
             <!-- User Menu -->
             <div class="user-menu">
-                <button class="user-btn hover-pop" id="userMenuBtn">
+                <button class="user-btn hover-pop user-btn-animated" id="userMenuBtn">
                     <span class="user-avatar">U</span>
                 </button>
-                <div class="user-dropdown" id="userDropdown">
+                <div class="user-dropdown glass-card" id="userDropdown">
                     <div class="user-info">
                         <div class="user-avatar-large">U</div>
                         <div class="user-details">
@@ -216,6 +216,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('notificationList').innerHTML = '<div class="no-notifications">No new notifications</div>';
         document.getElementById('notificationCount').style.display = 'none';
         Toast.success('Notifications cleared');
+    });
+    
+    // Add animation to navbar on scroll
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
     });
 });
 </script>
