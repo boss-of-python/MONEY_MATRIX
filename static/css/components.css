@@ -93,6 +93,7 @@
 .btn-glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--color-text);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
@@ -136,6 +137,80 @@
     transform: scale(1);
 }
 
+/* Advanced 2025 Button Styles */
+.btn-holographic {
+    background: linear-gradient(45deg, 
+        #ff0000, #ff8000, #ffff00, 
+        #80ff00, #00ff00, #00ff80, 
+        #00ffff, #0080ff, #0000ff, 
+        #8000ff, #ff00ff, #ff0080);
+    background-size: 1200% 1200%;
+    color: white;
+    border: none;
+    animation: gradientShift 10s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-holographic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255,255,255,0.2) 0%, 
+        rgba(255,255,255,0.5) 50%, 
+        rgba(255,255,255,0.2) 100%);
+    animation: liquid 3s ease-in-out infinite;
+}
+
+.btn-distortion {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.btn-distortion:hover {
+    animation: liquidDistortion 0.5s ease-in-out;
+    transform: translateY(-2px);
+}
+
+.btn-wave {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-wave:hover {
+    animation: wave 0.5s ease-in-out;
+}
+
+.btn-pulse-ring {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    position: relative;
+}
+
+.btn-pulse-ring::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    border: 2px solid var(--color-primary);
+    animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
 /* Cards */
 .card {
     background: var(--color-card);
@@ -155,10 +230,11 @@
 
 /* Enhanced Card Styles */
 .card-glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-xl);
 }
 
 .card-gradient {
@@ -180,6 +256,65 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(45deg, rgba(79, 70, 229, 0.05), rgba(16, 185, 129, 0.05));
+    z-index: -1;
+}
+
+/* Advanced 2025 Card Styles */
+.card-holographic {
+    background: linear-gradient(45deg, 
+        rgba(255, 0, 0, 0.1), 
+        rgba(0, 255, 0, 0.1), 
+        rgba(0, 0, 255, 0.1));
+    background-size: 300% 300%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: gradientShift 8s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-holographic::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1), 
+        transparent);
+    transform: rotate(45deg);
+    animation: liquid 6s ease-in-out infinite;
+}
+
+.card-distortion {
+    transition: all var(--transition-base);
+}
+
+.card-distortion:hover {
+    animation: liquidDistortion 0.8s ease-in-out;
+}
+
+.card-swirl {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-swirl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(79, 70, 229, 0.1) 0deg,
+        rgba(16, 185, 129, 0.1) 120deg,
+        rgba(245, 158, 11, 0.1) 240deg,
+        rgba(79, 70, 229, 0.1) 360deg
+    );
+    animation: swirl 10s linear infinite;
     z-index: -1;
 }
 
@@ -211,12 +346,36 @@
 .input-liquid {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .input-neon:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+}
+
+.input-distortion:focus {
+    animation: liquidDistortion 0.3s ease-in-out;
+}
+
+/* Advanced 2025 Input Styles */
+.input-holographic {
+    background: linear-gradient(45deg, 
+        rgba(79, 70, 229, 0.1), 
+        rgba(16, 185, 129, 0.1));
+    background-size: 200% 200%;
+    border: 1px solid rgba(79, 70, 229, 0.3);
+    animation: gradientShift 4s ease infinite;
+}
+
+.input-glow {
+    transition: all var(--transition-base);
+}
+
+.input-glow:focus {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+    border-color: var(--color-primary);
 }
 
 /* Form Group */
@@ -518,6 +677,54 @@ input:checked + .toggle-slider:before {
     transform: translateX(26px);
 }
 
+/* Advanced 2025 Toggle */
+.toggle-switch-liquid {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.toggle-switch-liquid input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider-liquid {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, var(--color-border), var(--color-bg-secondary));
+    transition: .4s;
+    border-radius: 34px;
+    overflow: hidden;
+}
+
+.toggle-slider-liquid::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+input:checked + .toggle-slider-liquid {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-light));
+}
+
+input:checked + .toggle-slider-liquid::before {
+    transform: translateX(30px);
+}
+
 /* Modal */
 .modal-overlay {
     position: fixed;
@@ -595,6 +802,19 @@ input:checked + .toggle-slider:before {
     justify-content: flex-end;
 }
 
+/* Advanced 2025 Modal */
+.modal-glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .modal-glass {
+    background: rgba(31, 41, 55, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Toast */
 .toast-container {
     position: fixed;
@@ -665,6 +885,160 @@ input:checked + .toggle-slider:before {
 
 .toast-close:hover {
     color: var(--color-error);
+}
+
+/* Advanced 2025 Toast */
+.toast-holographic {
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.9), 
+        rgba(240, 240, 255, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .toast-holographic {
+    background: linear-gradient(45deg, 
+        rgba(31, 41, 55, 0.9), 
+        rgba(17, 24, 39, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Loading Spinner */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(79, 70, 229, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-primary);
+    animation: spin 1s ease-in-out infinite;
+}
+
+.spinner-lg {
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+}
+
+/* Advanced 2025 Loading */
+.spinner-liquid {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.spinner-liquid::before,
+.spinner-liquid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        var(--color-primary) 60deg,
+        var(--color-primary-light) 120deg,
+        transparent 180deg
+    );
+    animation: spin 1.5s linear infinite;
+}
+
+.spinner-liquid::after {
+    background: conic-gradient(
+        from 180deg at 50% 50%,
+        transparent 0deg,
+        var(--color-accent) 60deg,
+        var(--color-accent-dark) 120deg,
+        transparent 180deg
+    );
+    animation: spin 2s linear infinite reverse;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    background: var(--color-text);
+    color: var(--color-card);
+    text-align: center;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-text) transparent transparent transparent;
+}
+
+/* Advanced 2025 Tooltip */
+.tooltip-glass {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-glass .tooltip-text-glass {
+    visibility: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-text);
+    text-align: center;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.tooltip-glass:hover .tooltip-text-glass {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-glass .tooltip-text-glass::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.3) transparent transparent transparent;
 }
 
 @media (max-width: 768px) {

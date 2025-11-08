@@ -7,6 +7,9 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    /* Advanced 2025 body styles */
+    background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
 }
 
 .main-content {
@@ -38,6 +41,55 @@ body {
 .grid-gap-sm { gap: var(--spacing-sm); }
 .grid-gap-md { gap: var(--spacing-md); }
 .grid-gap-lg { gap: var(--spacing-lg); }
+
+/* Advanced 2025 Grid System */
+.grid-masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 10px;
+    gap: var(--spacing-lg);
+}
+
+.grid-masonry > * {
+    grid-row-end: span calc(var(--row-span, 10));
+}
+
+.grid-isotope {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* Container Queries - 2025 Feature */
+.container-sm {
+    container-type: inline-size;
+}
+
+@container (min-width: 300px) {
+    .container-sm .card {
+        padding: var(--spacing-md);
+    }
+}
+
+.container-md {
+    container-type: inline-size;
+}
+
+@container (min-width: 500px) {
+    .container-md .card {
+        padding: var(--spacing-lg);
+    }
+}
+
+.container-lg {
+    container-type: inline-size;
+}
+
+@container (min-width: 800px) {
+    .container-lg .card {
+        padding: var(--spacing-xl);
+    }
+}
 
 @media (max-width: 1024px) {
     .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
@@ -111,6 +163,29 @@ body {
 .leading-normal { line-height: 1.5; }
 .leading-relaxed { line-height: 1.625; }
 .leading-loose { line-height: 2; }
+
+/* Advanced 2025 Typography */
+.text-gradient {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+.text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-primary);
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+}
 
 /* Spacing */
 .m-0 { margin: 0; }
@@ -196,6 +271,24 @@ body {
 .bg-accent { background-color: var(--color-accent); }
 .bg-accent-dark { background-color: var(--color-accent-dark); }
 
+/* Advanced 2025 Color Utilities */
+.bg-gradient-primary {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-light));
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(45deg, var(--color-accent), var(--color-accent-dark));
+}
+
+.bg-gradient-liquid {
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent), 
+        var(--color-warning));
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+}
+
 /* Border Utilities */
 .border { border: 1px solid var(--color-border); }
 .border-t { border-top: 1px solid var(--color-border); }
@@ -216,6 +309,19 @@ body {
 .rounded-full { border-radius: var(--radius-full); }
 .rounded-none { border-radius: 0; }
 
+/* Advanced 2025 Border Utilities */
+.border-gradient {
+    border: double 2px transparent;
+    border-radius: var(--radius-md);
+    background-image: linear-gradient(var(--color-card), var(--color-card)), 
+                      linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.border-dashed { border-style: dashed; }
+.border-dotted { border-style: dotted; }
+
 /* Shadow Utilities */
 .shadow-sm { box-shadow: var(--shadow-sm); }
 .shadow { box-shadow: var(--shadow-md); }
@@ -223,6 +329,22 @@ body {
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
 .shadow-none { box-shadow: none; }
+
+/* Advanced 2025 Shadow Utilities */
+.shadow-inner {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.shadow-liquid {
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2),
+                0 5px 10px rgba(16, 185, 129, 0.2);
+}
+
+.shadow-holographic {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.3),
+                0 0 30px rgba(16, 185, 129, 0.2),
+                0 0 45px rgba(245, 158, 11, 0.1);
+}
 
 /* Position Utilities */
 .relative { position: relative; }
@@ -268,6 +390,11 @@ body {
 .w-1\/4 { width: 25%; }
 .w-3\/4 { width: 75%; }
 
+/* Advanced 2025 Width Utilities */
+.w-fit { width: fit-content; }
+.w-min { width: min-content; }
+.w-max { width: max-content; }
+
 /* Opacity */
 .opacity-0 { opacity: 0; }
 .opacity-25 { opacity: 0.25; }
@@ -304,12 +431,28 @@ body {
 .translate-y-2 { transform: translateY(0.5rem); }
 .translate-y-4 { transform: translateY(1rem); }
 
+/* Advanced 2025 Transform Utilities */
+.transform-3d {
+    transform-style: preserve-3d;
+}
+
+.perspective {
+    perspective: 1000px;
+}
+
 /* Animation Utilities */
 .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 .animate-bounce { animation: bounce 1s infinite; }
 .animate-spin { animation: spin 1s linear infinite; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+
+/* Advanced 2025 Animation Utilities */
+.animate-wave { animation: wave 2s ease-in-out infinite; }
+.animate-glitch { animation: glitch 0.5s ease-in-out infinite; }
+.animate-neon { animation: neonGlow 2s ease-in-out infinite; }
+.animate-liquid-distortion { animation: liquidDistortion 3s ease-in-out infinite; }
+.animate-swirl { animation: swirl 4s linear infinite; }
 
 /* Selection */
 ::selection {
@@ -336,6 +479,11 @@ body {
     background: var(--color-primary-dark);
 }
 
+/* Advanced 2025 Scrollbar */
+::-webkit-scrollbar-corner {
+    background: var(--color-bg-secondary);
+}
+
 /* Focus Styles */
 *:focus {
     outline: none;
@@ -344,6 +492,24 @@ body {
 *:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+}
+
+/* Advanced 2025 Focus Styles */
+.focus-ring {
+    outline: none;
+    position: relative;
+}
+
+.focus-ring:focus-visible::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid var(--color-primary);
+    border-radius: inherit;
+    animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 
 /* Responsive Utilities */
@@ -371,4 +537,87 @@ body {
     .lg\:w-1\/2 { width: 50%; }
     .lg\:w-1\/3 { width: 33.333333%; }
     .lg\:w-2\/3 { width: 66.666667%; }
+}
+
+/* Advanced 2025 Responsive Utilities */
+@media (min-width: 1280px) {
+    .xl\:block { display: block; }
+    .xl\:hidden { display: none; }
+    .xl\:flex { display: flex; }
+    .xl\:w-1\/2 { width: 50%; }
+    .xl\:w-1\/3 { width: 33.333333%; }
+    .xl\:w-2\/3 { width: 66.666667%; }
+}
+
+@media (min-width: 1536px) {
+    .xxl\:block { display: block; }
+    .xxl\:hidden { display: none; }
+    .xxl\:flex { display: flex; }
+    .xxl\:w-1\/2 { width: 50%; }
+    .xxl\:w-1\/3 { width: 33.333333%; }
+    .xxl\:w-2\/3 { width: 66.666667%; }
+}
+
+/* Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Advanced 2025 Motion Utilities */
+.motion-safe {
+    @media (prefers-reduced-motion: no-preference) {
+        /* Only apply animations if user prefers motion */
+    }
+}
+
+.motion-reduce {
+    @media (prefers-reduced-motion: reduce) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark Mode Utilities */
+.dark\:bg-dark { 
+    [data-theme="dark"] & {
+        background-color: #111827;
+    }
+}
+
+.dark\:text-light {
+    [data-theme="dark"] & {
+        color: #F9FAFB;
+    }
+}
+
+/* Advanced 2025 Dark Mode Utilities */
+.dark\:glass-effect {
+    [data-theme="dark"] & {
+        background: rgba(31, 41, 55, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Print Utilities */
+@media print {
+    .print\:hidden {
+        display: none !important;
+    }
+    
+    .print\:block {
+        display: block !important;
+    }
+    
+    .print\:text-black {
+        color: black !important;
+    }
+    
+    .print\:bg-white {
+        background-color: white !important;
+    }
 }
