@@ -27,6 +27,9 @@ class Config:
     # Firebase Configuration
     FIREBASE_CREDENTIALS_PATH = os.getenv('FIREBASE_CREDENTIALS', 'S:/MONEY_MATRIX/firebase_credentials.json')
     
+    # AI/ML Configuration
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+    
     # Security Configuration
     CSRF_ENABLED = os.getenv('CSRF_ENABLED', 'True').lower() == 'true'
     SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'True').lower() == 'true'
@@ -66,7 +69,7 @@ class ProductionConfig(Config):
         Config.init_app(app)
         
         # Validate required environment variables
-        required_vars = ['SECRET_KEY', 'FIREBASE_CREDENTIALS']
+        required_vars = ['SECRET_KEY', 'FIREBASE_CREDENTIALS', 'GEMINI_API_KEY']
         missing_vars = [var for var in required_vars if not os.getenv(var)]
         if missing_vars:
             raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
