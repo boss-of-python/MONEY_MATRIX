@@ -121,6 +121,48 @@
     animation: gradientShift 1.5s ease infinite;
 }
 
+/* Holographic Button with Rainbow Gradients */
+.btn-holographic-rainbow {
+    background: linear-gradient(90deg, 
+        #ff0000, #ff8000, #ffff00, 
+        #80ff00, #00ff00, #00ff80, 
+        #00ffff, #0080ff, #0000ff, 
+        #8000ff, #ff00ff, #ff0080, 
+        #ff0000);
+    background-size: 200% 200%;
+    color: white;
+    border: none;
+    animation: gradientShift 2s linear infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-holographic-rainbow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.btn-holographic-rainbow:hover::before {
+    transform: translateX(100%);
+}
+
+.btn-holographic-rainbow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: gradientShift 1s linear infinite;
+}
+
 /* Icon Buttons */
 .icon-btn {
     display: inline-flex;
@@ -281,6 +323,179 @@
 
 .form-check-label {
     margin-bottom: 0;
+}
+
+/* Advanced Toggle Switches with Liquid Effects */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-bg-secondary);
+    transition: .4s;
+    border-radius: 34px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent));
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .toggle-slider {
+    background: linear-gradient(45deg, 
+        rgba(79, 70, 229, 0.3), 
+        rgba(16, 185, 129, 0.3));
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Liquid Effect Animation */
+.toggle-slider.liquid-effect:before {
+    animation: liquidEffect 3s ease-in-out infinite;
+}
+
+@keyframes liquidEffect {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+    25% {
+        transform: translateX(0) scale(1.1);
+    }
+    50% {
+        transform: translateX(26px) scale(1.1);
+    }
+    75% {
+        transform: translateX(26px) scale(1);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+    }
+}
+
+input:checked + .toggle-slider.liquid-effect:before {
+    animation: liquidEffectReverse 3s ease-in-out infinite;
+}
+
+@keyframes liquidEffectReverse {
+    0% {
+        transform: translateX(26px) scale(1);
+    }
+    25% {
+        transform: translateX(26px) scale(1.1);
+    }
+    50% {
+        transform: translateX(0) scale(1.1);
+    }
+    75% {
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        transform: translateX(26px) scale(1);
+    }
+}
+
+/* Holographic Toggle Switch */
+.toggle-switch.holographic .toggle-slider {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.1);
+}
+
+.toggle-switch.holographic .toggle-slider:before {
+    background: linear-gradient(90deg, 
+        #ff0000, #ff8000, #ffff00, 
+        #80ff00, #00ff00, #00ff80, 
+        #00ffff, #0080ff, #0000ff, 
+        #8000ff, #ff00ff, #ff0080);
+    background-size: 200% 200%;
+    animation: gradientShift 2s linear infinite;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch.holographic input:checked + .toggle-slider {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    box-shadow: 0 4px 20px rgba(31, 38, 135, 0.2);
+}
+
+/* Distortion Toggle Switch */
+.toggle-switch.distortion .toggle-slider {
+    background: linear-gradient(45deg, 
+        rgba(79, 70, 229, 0.3), 
+        rgba(16, 185, 129, 0.3));
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.distortion .toggle-slider:before {
+    background: linear-gradient(45deg, 
+        rgba(79, 70, 229, 0.8), 
+        rgba(16, 185, 129, 0.8));
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch.distortion input:checked + .toggle-slider {
+    background: linear-gradient(45deg, 
+        rgba(16, 185, 129, 0.3), 
+        rgba(79, 70, 229, 0.3));
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Wave Toggle Switch */
+.toggle-switch.wave .toggle-slider {
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent));
+    animation: gradientShift 3s ease infinite;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.wave .toggle-slider:before {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch.wave input:checked + .toggle-slider {
+    background: linear-gradient(45deg, 
+        var(--color-accent), 
+        var(--color-primary));
+    animation: gradientShift 3s ease infinite reverse;
 }
 
 /* Alerts */
@@ -707,6 +922,44 @@
     left: 120%;
 }
 
+/* Distortion Button with Liquid Effects */
+.btn-distortion-liquid {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, 
+        rgba(79, 70, 229, 0.8), 
+        rgba(16, 185, 129, 0.8));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-distortion-liquid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transform: translate(-100%, -100%);
+    transition: transform 0.5s ease;
+}
+
+.btn-distortion-liquid:hover::before {
+    transform: translate(100%, 100%);
+}
+
+.btn-distortion-liquid:hover {
+    animation: liquid 0.5s ease-in-out;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
 /* Neon Glow Effect */
 .neon-glow {
     box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
@@ -715,6 +968,75 @@
 
 .neon-glow:hover {
     box-shadow: 0 0 15px rgba(79, 70, 229, 0.8), 0 0 30px rgba(79, 70, 229, 0.6);
+}
+
+/* Wave Button with Oscillating Animations */
+.btn-wave {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-wave:hover {
+    animation: wave 1s ease-in-out;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-wave::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-wave:hover::before {
+    left: 100%;
+}
+
+/* Pulse Ring Button with Expanding Rings */
+.btn-pulse-ring {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, 
+        var(--color-primary), 
+        var(--color-accent));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-pulse-ring::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid currentColor;
+    border-radius: inherit;
+    animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn-pulse-ring:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Advanced Card Effects */
