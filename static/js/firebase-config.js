@@ -24,29 +24,19 @@
  */
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyAYGjAM6f9m0qnxEac1yEwIkrTfAB1u2Dc",
+  authDomain: "money-matrix-6d87d.firebaseapp.com",
+  projectId: "money-matrix-6d87d",
+  storageBucket: "money-matrix-6d87d.firebasestorage.app",
+  messagingSenderId: "93196660287",
+  appId: "1:93196660287:web:e5b7a8f4e06d258fb3528a",
+  measurementId: "G-HBNB8V781B"
 };
 
 // Initialize Firebase
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { 
-    getAuth, 
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut,
-    sendPasswordResetEmail,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-    updateProfile
-} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+firebase.initializeApp(firebaseConfig);
 
 // Check if Firebase config is set
 const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
