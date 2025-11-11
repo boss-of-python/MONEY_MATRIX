@@ -9,89 +9,164 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-content-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-title-animated {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-title-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-subtitle-animated {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-subtitle-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-description-animated {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-description-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-actions-animated {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-actions-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-stats-animated {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hero-stats-animated.animated {
     opacity: 1;
     transform: translateY(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for hero animation glitches */
+.hero-content-animated.no-glitch,
+.hero-title-animated.no-glitch,
+.hero-subtitle-animated.no-glitch,
+.hero-description-animated.no-glitch,
+.hero-actions-animated.no-glitch,
+.hero-stats-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Scroll Animation Classes */
 .js-scroll {
     opacity: 0;
     transition: opacity 500ms ease-out, transform 500ms ease-out;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .js-scroll.scrolled {
     opacity: 1;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .js-scroll.slide-left {
     transform: translateX(-200px);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .js-scroll.slide-right {
     transform: translateX(200px);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .js-scroll.scrolled.slide-left,
 .js-scroll.scrolled.slide-right {
     transform: translateX(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for scroll animation glitches */
+.js-scroll.no-glitch,
+.js-scroll.scrolled.no-glitch,
+.js-scroll.slide-left.no-glitch,
+.js-scroll.slide-right.no-glitch,
+.js-scroll.scrolled.slide-left.no-glitch,
+.js-scroll.scrolled.slide-right.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Additional Animations */
@@ -120,6 +195,9 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-animated::before {
@@ -131,56 +209,122 @@
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: 0.5s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-animated:hover::before {
     left: 100%;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for button hover glitches */
+.btn-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Card hover effects */
 .feature-card-animated,
 .testimonial-card-animated {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .feature-card-animated:hover,
 .testimonial-card-animated:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for card hover glitches */
+.feature-card-animated.no-glitch,
+.testimonial-card-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Theme toggle animation */
 .theme-toggle-animated {
     transition: transform 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .theme-toggle-animated:hover {
     transform: rotate(15deg);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for theme toggle glitches */
+.theme-toggle-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Notification button animation */
 .notification-btn-animated {
     transition: transform 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .notification-btn-animated:hover {
     transform: scale(1.1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for notification button glitches */
+.notification-btn-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* User button animation */
 .user-btn-animated {
     transition: transform 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .user-btn-animated:hover {
     transform: scale(1.1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for user button glitches */
+.user-btn-animated.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 </style>
 {% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section glass-effect">
+<section class="hero-section glass-effect no-glitch">
     <div class="hero-container">
         <div class="hero-content hero-content-animated">
             <h1 class="hero-title hero-title-animated">Take Control of Your Finances</h1>
@@ -220,32 +364,32 @@
             <p class="section-description">Everything you need to master your personal finances</p>
         </div>
         <div class="features-grid staggered-children">
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">📊</div>
                 <h3>Smart Budgeting</h3>
                 <p>Create personalized budgets with AI-powered recommendations that adapt to your spending patterns.</p>
             </div>
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">📈</div>
                 <h3>Advanced Analytics</h3>
                 <p>Visualize your financial health with interactive charts and predictive insights for better decisions.</p>
             </div>
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">🔄</div>
                 <h3>Auto-Sync</h3>
                 <p>Seamlessly connect your bank accounts and credit cards for real-time transaction updates.</p>
             </div>
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">🔐</div>
                 <h3>Bank-Level Security</h3>
                 <p>Your financial data is protected with end-to-end encryption and multi-factor authentication.</p>
             </div>
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">📱</div>
                 <h3>Mobile Access</h3>
                 <p>Manage your finances on the go with our responsive web app and mobile-optimized interface.</p>
             </div>
-            <div class="feature-card glass-card feature-card-animated">
+            <div class="feature-card glass-card feature-card-animated no-glitch">
                 <div class="feature-icon">🎯</div>
                 <h3>Goal Tracking</h3>
                 <p>Set financial goals and track your progress with milestone celebrations and achievement badges.</p>
@@ -255,7 +399,7 @@
 </section>
 
 <!-- How It Works Section -->
-<section class="how-it-works-section glass-effect">
+<section class="how-it-works-section glass-effect no-glitch">
     <div class="container">
         <div class="section-header js-scroll">
             <h2 class="section-title">Simple 3-Step Process</h2>
@@ -289,7 +433,7 @@
             <p class="section-description">Join thousands of satisfied customers transforming their finances</p>
         </div>
         <div class="testimonials-container staggered-children">
-            <div class="testimonial-card glass-card testimonial-card-animated">
+            <div class="testimonial-card glass-card testimonial-card-animated no-glitch">
                 <div class="testimonial-content">
                     <p>"Money Matrix completely changed how I manage my finances. The AI insights helped me save over $2,000 in the first year!"</p>
                 </div>
@@ -301,7 +445,7 @@
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card glass-card testimonial-card-animated">
+            <div class="testimonial-card glass-card testimonial-card-animated no-glitch">
                 <div class="testimonial-content">
                     <p>"The budgeting tools are incredibly intuitive. I've paid off my credit card debt 6 months earlier than planned."</p>
                 </div>
@@ -313,7 +457,7 @@
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card glass-card testimonial-card-animated">
+            <div class="testimonial-card glass-card testimonial-card-animated no-glitch">
                 <div class="testimonial-content">
                     <p>"As a family of four, Money Matrix helps us stay on track with our financial goals. The goal tracking feature is a game-changer!"</p>
                 </div>
@@ -330,7 +474,7 @@
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section glass-effect">
+<section class="cta-section glass-effect no-glitch">
     <div class="container">
         <div class="cta-content staggered-children">
             <h2 class="cta-title">Ready to Transform Your Finances?</h2>

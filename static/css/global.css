@@ -10,6 +10,16 @@ body {
     /* Advanced 2025 body styles */
     background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for body background glitches */
+body.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 .main-content {
@@ -766,12 +776,68 @@ body {
         var(--color-primary));
     background-size: 200% 200%;
     animation: gradientShift 4s ease infinite;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .bg-animated-particles {
     background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
     animation: float 10s ease-in-out infinite;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for animated background glitches */
+.bg-animated-waves.no-glitch,
+.bg-animated-particles.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+}
+
+/* Animated Background */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for animated background glitches */
+.animated-background.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+}
+
+/* Particles Background */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for particles background glitches */
+#particles-js.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Text Color Utilities */
@@ -1281,6 +1347,9 @@ a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 [data-theme="dark"] .navbar {
@@ -1298,6 +1367,14 @@ a:hover {
 [data-theme="dark"] .navbar.navbar-scrolled {
     background: rgba(30, 30, 30, 0.8) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for navbar glitch on scroll */
+.navbar-animated {
+    transform: translate3d(0,0,0);
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .nav-container {
@@ -1612,4 +1689,22 @@ a:hover {
 
 .mobile-menu-toggle.active .hamburger::after {
     transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Toast Container */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: var(--z-toast);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for toast container glitches */
+.toast-container.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }

@@ -27,10 +27,10 @@
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="animated-background"></div>
+    <div class="animated-background no-glitch"></div>
     
     <!-- Particles Background -->
-    <div id="particles-js"></div>
+    <div id="particles-js" class="no-glitch"></div>
     
     <!-- Navigation (hidden on auth pages) -->
     {% if request.path not in ['/auth/login', '/auth/register', '/auth/reset-password'] %}

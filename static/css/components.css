@@ -17,6 +17,9 @@
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-primary {
@@ -113,12 +116,22 @@
     border: none;
     animation: gradientShift 3s ease infinite;
     box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-holographic:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
     animation: gradientShift 1.5s ease infinite;
+}
+
+/* Fix for button glitches */
+.btn-holographic.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Holographic Button with Rainbow Gradients */
@@ -136,6 +149,9 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-holographic-rainbow::before {
@@ -161,6 +177,13 @@
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     animation: gradientShift 1s linear infinite;
+}
+
+/* Fix for rainbow button glitches */
+.btn-holographic-rainbow.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Icon Buttons */
@@ -192,11 +215,21 @@
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
+}
+
+/* Fix for card glitches */
+.card.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 .card-header {
@@ -331,6 +364,9 @@
     display: inline-block;
     width: 60px;
     height: 34px;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .toggle-switch input {
@@ -365,6 +401,9 @@
     transition: .4s;
     border-radius: 50%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 input:checked + .toggle-slider {
@@ -435,6 +474,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 20px rgba(31, 38, 135, 0.1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .toggle-switch.holographic .toggle-slider:before {
@@ -446,6 +488,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     background-size: 200% 200%;
     animation: gradientShift 2s linear infinite;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .toggle-switch.holographic input:checked + .toggle-slider {
@@ -453,6 +498,16 @@ input:checked + .toggle-slider.liquid-effect:before {
         rgba(255, 255, 255, 0.2) 0%, 
         rgba(255, 255, 255, 0.1) 100%);
     box-shadow: 0 4px 20px rgba(31, 38, 135, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for toggle switch glitches */
+.toggle-switch.holographic.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Distortion Toggle Switch */
@@ -461,6 +516,9 @@ input:checked + .toggle-slider.liquid-effect:before {
         rgba(79, 70, 229, 0.3), 
         rgba(16, 185, 129, 0.3));
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .toggle-switch.distortion .toggle-slider:before {
@@ -468,6 +526,9 @@ input:checked + .toggle-slider.liquid-effect:before {
         rgba(79, 70, 229, 0.8), 
         rgba(16, 185, 129, 0.8));
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .toggle-switch.distortion input:checked + .toggle-slider {
@@ -475,6 +536,16 @@ input:checked + .toggle-slider.liquid-effect:before {
         rgba(16, 185, 129, 0.3), 
         rgba(79, 70, 229, 0.3));
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Fix for distortion toggle glitches */
+.toggle-switch.distortion.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Wave Toggle Switch */
@@ -882,6 +953,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hover-distortion::before {
@@ -893,10 +967,20 @@ input:checked + .toggle-slider.liquid-effect:before {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: 0.5s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .hover-distortion:hover::before {
     left: 100%;
+}
+
+/* Fix for hover distortion glitches */
+.hover-distortion.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Liquid Button Effect */
@@ -904,6 +988,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-liquid::after {
@@ -916,10 +1003,20 @@ input:checked + .toggle-slider.liquid-effect:before {
     background: rgba(255, 255, 255, 0.3);
     transform: rotate(30deg);
     transition: all 0.8s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-liquid:hover::after {
     left: 120%;
+}
+
+/* Fix for liquid button glitches */
+.btn-liquid.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Distortion Button with Liquid Effects */
@@ -933,6 +1030,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     color: white;
     border: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-distortion-liquid::before {
@@ -948,6 +1048,9 @@ input:checked + .toggle-slider.liquid-effect:before {
         transparent);
     transform: translate(-100%, -100%);
     transition: transform 0.5s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-distortion-liquid:hover::before {
@@ -958,6 +1061,13 @@ input:checked + .toggle-slider.liquid-effect:before {
     animation: liquid 0.5s ease-in-out;
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Fix for distortion liquid button glitches */
+.btn-distortion-liquid.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Neon Glow Effect */
@@ -981,6 +1091,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     color: white;
     border: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-wave:hover {
@@ -1001,10 +1114,20 @@ input:checked + .toggle-slider.liquid-effect:before {
         rgba(255, 255, 255, 0.3), 
         transparent);
     transition: left 0.5s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-wave:hover::before {
     left: 100%;
+}
+
+/* Fix for wave button glitches */
+.btn-wave.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Pulse Ring Button with Expanding Rings */
@@ -1018,6 +1141,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     color: white;
     border: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-pulse-ring::after {
@@ -1032,6 +1158,9 @@ input:checked + .toggle-slider.liquid-effect:before {
     animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
     opacity: 0;
     pointer-events: none;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .btn-pulse-ring:hover {
@@ -1039,14 +1168,31 @@ input:checked + .toggle-slider.liquid-effect:before {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+/* Fix for pulse ring button glitches */
+.btn-pulse-ring.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+}
+
 /* Advanced Card Effects */
 .card-3d {
     transform-style: preserve-3d;
     transition: transform 0.5s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 .card-3d:hover {
     transform: rotateY(5deg) rotateX(5deg);
+}
+
+/* Fix for 3D card glitches */
+.card-3d.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 /* Advanced Button States */

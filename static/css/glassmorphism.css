@@ -8,6 +8,9 @@
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius-lg);
     transition: all var(--transition-base);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 [data-theme="dark"] .glass-effect {
@@ -19,6 +22,13 @@
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
     box-shadow: var(--shadow-xl);
+}
+
+/* Fix for glass effect glitches */
+.glass-effect.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
 }
 
 .glass-card {
@@ -42,6 +52,16 @@
 .glass-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-2xl);
+}
+
+/* Fix for glass card glitches */
+.glass-card.no-glitch {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 /* Advanced Glassmorphism Effects */
