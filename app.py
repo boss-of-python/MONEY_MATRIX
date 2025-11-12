@@ -79,6 +79,49 @@ def create_app(config_name='default'):
         """Dashboard page for authenticated users"""
         return render_template('dashboard.html')
     
+    @app.route('/transactions')
+    def transactions():
+        """Transactions page"""
+        return render_template('transactions.html')
+    
+    @app.route('/budgets')
+    def budgets():
+        """Budgets page"""
+        return render_template('budgets.html')
+    
+    @app.route('/analytics')
+    def analytics():
+        """Analytics page"""
+        return render_template('analytics.html')
+    
+    @app.route('/settings')
+    def settings():
+        """Settings page"""
+        return render_template('settings.html')
+    
+    @app.route('/export')
+    def export_page():
+        """Export page"""
+        return render_template('export.html')
+    
+    @app.route('/help')
+    def help_page():
+        """Help page"""
+        return render_template('help.html')
+    
+    @app.route('/api/config/firebase')
+    def firebase_config():
+        """Serve Firebase configuration for frontend"""
+        return jsonify({
+            'apiKey': app.config['FIREBASE_API_KEY'],
+            'authDomain': app.config['FIREBASE_AUTH_DOMAIN'],
+            'projectId': app.config['FIREBASE_PROJECT_ID'],
+            'storageBucket': app.config['FIREBASE_STORAGE_BUCKET'],
+            'messagingSenderId': app.config['FIREBASE_MESSAGING_SENDER_ID'],
+            'appId': app.config['FIREBASE_APP_ID'],
+            'measurementId': app.config['FIREBASE_MEASUREMENT_ID']
+        }), 200
+    
     logger.info(f"Money Matrix initialized in {config_name} mode")
     logger.info(f"Registered routes: {[str(rule) for rule in app.url_map.iter_rules()]}")
     

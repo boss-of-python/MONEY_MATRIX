@@ -134,16 +134,24 @@ function initializeParticles() {
     // Create particles
     for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
+        const size = Math.random() * 4 + 1; // 1-5px
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const duration = Math.random() * 10 + 10; // 10-20s
+        const delay = Math.random() * 5;
+        
         particle.style.cssText = `
             position: absolute;
-            width: ${Math.random() * 5 + 1}px;
-            height: ${Math.random() * 5 + 1}px;
+            width: ${size}px;
+            height: ${size}px;
             background: rgba(79, 70, 229, 0.3);
             border-radius: 50%;
-            top: ${Math.random() * 100}%;
-            left: ${Math.random() * 100}%;
-            animation: floatParticle ${Math.random() * 10 + 10}s infinite ease-in-out;
-            animation-delay: ${Math.random() * 5}s;
+            top: ${posX}%;
+            left: ${posY}%;
+            animation: floatParticle ${duration}s infinite ease-in-out;
+            animation-delay: ${delay}s;
+            will-change: transform;
+            transform: translateZ(0);
         `;
         particlesContainer.appendChild(particle);
     }
@@ -158,13 +166,13 @@ function initializeParticles() {
                     transform: translate(0, 0);
                 }
                 25% {
-                    transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px);
+                    transform: translate(-10px, -10px);
                 }
                 50% {
-                    transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
+                    transform: translate(15px, 15px);
                 }
                 75% {
-                    transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px);
+                    transform: translate(-10px, 10px);
                 }
             }
         `;

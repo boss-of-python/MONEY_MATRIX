@@ -9,7 +9,7 @@
  * 3. Click on "Add app" and select "Web" (</>) icon
  * 4. Register your app with a nickname (e.g., "Money Matrix")
  * 5. Copy the firebaseConfig object from the setup page
- * 6. Replace the config below with your actual Firebase config
+ * 6. Set the values in your .env file
  * 
  * 7. Enable Authentication:
  *    - In Firebase Console, go to "Authentication" > "Get started"
@@ -23,49 +23,43 @@
  * 9. For production, update security rules and enable proper authentication
  */
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAYGjAM6f9m0qnxEac1yEwIkrTfAB1u2Dc",
-  authDomain: "money-matrix-6d87d.firebaseapp.com",
-  projectId: "money-matrix-6d87d",
-  storageBucket: "money-matrix-6d87d.firebasestorage.app",
-  messagingSenderId: "93196660287",
-  appId: "1:93196660287:web:e5b7a8f4e06d258fb3528a",
-  measurementId: "G-HBNB8V781B"
-};
+// Initialize Firebase with dynamic configuration
+let app, auth, isConfigured = false;
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Check if Firebase config is set
-const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
-
-let app, auth;
-
-if (isConfigured) {
+// Function to initialize Firebase with configuration from backend
+async function initializeFirebase() {
     try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        console.log('Firebase initialized successfully');
+        // Fetch configuration from backend
+        const response = await fetch('/api/config/firebase');
+        if (!response.ok) {
+            throw new Error('Failed to fetch Firebase configuration');
+        }
+        
+        const firebaseConfig = await response.json();
+        
+        // Check if config is valid
+        isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
+        
+        if (isConfigured) {
+            // Initialize Firebase app
+            app = firebase.initializeApp(firebaseConfig);
+            // Get auth instance
+            auth = firebase.auth();
+            console.log('Firebase initialized successfully');
+        } else {
+            console.warn('Firebase is not configured. Running in demo mode.');
+            console.warn('Set Firebase configuration in your .env file');
+        }
     } catch (error) {
-        console.error('Firebase initialization error:', error);
+        console.error('Failed to initialize Firebase:', error);
+        console.warn('Running in demo mode due to configuration error');
     }
-} else {
-    console.warn('Firebase is not configured. Running in demo mode.');
-    console.warn('Get your config from: https://console.firebase.google.com/');
 }
 
 // Export Firebase services and methods
 export {
+    app,
     auth,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut,
-    sendPasswordResetEmail,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-    updateProfile,
-    isConfigured
+    isConfigured,
+    initializeFirebase
 };

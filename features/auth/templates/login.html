@@ -151,28 +151,34 @@
 </style>
 
 <script type="module">
-import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, isConfigured, onAuthStateChanged } from '/static/js/firebase-config.js';
+import { initializeFirebase, auth, isConfigured } from '/static/js/firebase-config.js';
 
-// Only check auth state if Firebase is properly configured
-if (isConfigured && auth) {
-    // Check if already logged in and redirect silently
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // Already logged in, redirect to dashboard without showing the page
-            window.location.replace('/dashboard/');
+// Initialize Firebase
+initializeFirebase().then(() => {
+    // Only check auth state if Firebase is properly configured
+    if (isConfigured && auth) {
+        // Check if already logged in and redirect silently
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Already logged in, redirect to dashboard without showing the page
+                window.location.replace('/dashboard/');
+            }
+        });
+    } else {
+        // Firebase not configured - show info message
+        console.log('Firebase not configured - authentication features disabled');
+        if (window.Toast) {
+            Toast.info('Demo Mode: Firebase authentication not configured');
         }
-    });
-} else {
-    // Firebase not configured - show info message
-    console.log('Firebase not configured - authentication features disabled');
-    if (window.Toast) {
-        Toast.info('Demo Mode: Firebase authentication not configured');
     }
-}
+});
 
-if (!isConfigured && window.Toast) {
-    Toast.error('Firebase is not configured. Please set up your Firebase credentials.');
-}
+// Check configuration after a delay
+setTimeout(() => {
+    if (!isConfigured && window.Toast) {
+        Toast.error('Firebase is not configured. Please set up your Firebase credentials.');
+    }
+}, 1000);
 
 const loginForm = document.getElementById('loginForm');
 const googleLoginBtn = document.getElementById('googleLoginBtn');
@@ -188,6 +194,12 @@ loginForm.addEventListener('submit', async (e) => {
     document.getElementById('emailError').textContent = '';
     document.getElementById('passwordError').textContent = '';
     
+    // Validate input
+    if (!email || !password) {
+        Toast.error('Please fill in all fields');
+        return;
+    }
+    
     if (!isConfigured) {
         Toast.error('Firebase is not configured');
         return;
@@ -197,8 +209,11 @@ loginForm.addEventListener('submit', async (e) => {
         loginBtn.textContent = 'Logging in...';
         loginBtn.disabled = true;
         
+        // Add loading state to form
+        loginForm.classList.add('loading');
+        
         // Sign in with Firebase
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const idToken = await userCredential.user.getIdToken();
         
         // Verify token with backend
@@ -217,7 +232,8 @@ loginForm.addEventListener('submit', async (e) => {
             // Redirect to dashboard (replace to prevent back button issues)
             window.location.replace('/dashboard/');
         } else {
-            throw new Error('Token verification failed');
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Token verification failed');
         }
     } catch (error) {
         console.error('Login error:', error);
@@ -235,11 +251,14 @@ loginForm.addEventListener('submit', async (e) => {
         } else if (error.code === 'auth/invalid-credential') {
             errorMessage = 'Invalid email or password';
             document.getElementById('emailError').textContent = errorMessage;
+        } else if (error.message) {
+            errorMessage = error.message;
         }
         
         Toast.error(errorMessage);
         loginBtn.textContent = 'Login';
         loginBtn.disabled = false;
+        loginForm.classList.remove('loading');
     }
 });
 
@@ -250,8 +269,12 @@ googleLoginBtn.addEventListener('click', async () => {
     }
     
     try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
+        // Show loading state
+        googleLoginBtn.innerHTML = '<span class="spinner spinner-sm"></span> Logging in with Google...';
+        googleLoginBtn.disabled = true;
+        
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await firebase.auth().signInWithPopup(provider);
         
         // Get ID token
         const idToken = await result.user.getIdToken();
@@ -268,6 +291,7 @@ googleLoginBtn.addEventListener('click', async () => {
         if (response.ok) {
             localStorage.setItem('auth_token', idToken);
             localStorage.setItem('user_email', result.user.email);
+            localStorage.setItem('user_name', result.user.displayName || result.user.email.split('@')[0]);
             Toast.success('Logged in with Google!');
             window.location.replace('/dashboard/');
         } else {
@@ -280,17 +304,19 @@ googleLoginBtn.addEventListener('click', async () => {
                 body: JSON.stringify({
                     email: result.user.email,
                     password: 'google-oauth-user',
-                    display_name: result.user.displayName
+                    display_name: result.user.displayName || result.user.email.split('@')[0]
                 })
             });
             
             if (registerResponse.ok) {
                 localStorage.setItem('auth_token', idToken);
                 localStorage.setItem('user_email', result.user.email);
+                localStorage.setItem('user_name', result.user.displayName || result.user.email.split('@')[0]);
                 Toast.success('Account created and logged in!');
                 window.location.replace('/dashboard/');
             } else {
-                throw new Error('Registration failed');
+                const errorData = await registerResponse.json();
+                throw new Error(errorData.error || 'Registration failed');
             }
         }
     } catch (error) {
@@ -299,9 +325,15 @@ googleLoginBtn.addEventListener('click', async () => {
             Toast.info('Sign-in cancelled');
         } else if (error.code === 'auth/popup-blocked') {
             Toast.error('Popup blocked. Please allow popups for this site.');
+        } else if (error.code === 'auth/account-exists-with-different-credential') {
+            Toast.error('An account already exists with this email. Please login with your existing method.');
         } else {
             Toast.error(error.message || 'Google login failed');
         }
+    } finally {
+        // Reset button state
+        googleLoginBtn.innerHTML = '<span>🔐</span> Continue with Google';
+        googleLoginBtn.disabled = false;
     }
 });
 </script>

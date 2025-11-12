@@ -136,10 +136,14 @@ document.addEventListener('DOMContentLoaded', function() {
         style.textContent = `
             .toast-animated {
                 animation: slideInRight 0.3s ease-out;
+                will-change: transform;
+                transform: translateZ(0);
             }
             
             .toast-animated.hide {
                 animation: slideOutRight 0.3s ease-out;
+                will-change: transform;
+                transform: translateZ(0);
             }
             
             @keyframes slideInRight {

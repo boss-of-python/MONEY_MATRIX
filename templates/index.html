@@ -319,6 +319,408 @@
     -moz-osx-font-smoothing: grayscale;
     will-change: transform;
 }
+
+/* Professional Financial App Styles */
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 0;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+}
+
+.hero-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Features Section */
+.features-section {
+    padding: 5rem 0;
+    background: var(--color-bg-secondary);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.feature-card {
+    background: var(--color-card);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    text-align: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.feature-card p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+    padding: 5rem 0;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.step-item {
+    text-align: center;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.05), 
+        rgba(16, 185, 129, 0.05));
+    border: 1px solid rgba(79, 70, 229, 0.1);
+    transition: all var(--transition-base);
+}
+
+.step-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.step-item h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.step-item p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    padding: 5rem 0;
+    background: var(--color-bg-secondary);
+}
+
+.testimonials-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.testimonial-card {
+    background: var(--color-card);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.testimonial-content {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-content p {
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.author-info h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+}
+
+.author-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-content {
+    background: linear-gradient(135deg, 
+        rgba(79, 70, 229, 0.1), 
+        rgba(16, 185, 129, 0.1));
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.cta-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .features-grid,
+    .steps-container,
+    .testimonials-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .cta-content {
+        padding: 2rem;
+    }
+    
+    .cta-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 2rem 0;
+        min-height: 70vh;
+    }
+    
+    .hero-container {
+        padding: 0 1rem;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .feature-card,
+    .step-item,
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+}
 </style>
 {% endblock %}
 
@@ -331,7 +733,7 @@
             <p class="hero-subtitle hero-subtitle-animated">Smart budgeting, insightful analytics, and seamless expense tracking for a financially secure future.</p>
             <p class="hero-description hero-description-animated">Money Matrix transforms your financial management with AI-powered insights, beautiful visualizations, and intuitive tools that make budgeting effortless.</p>
             <div class="hero-actions hero-actions-animated">
-                <a href="/auth/register" class="btn btn-primary btn-lg btn-animated">
+                <a href="/auth/register" class="btn btn-primary btn-lg btn-animated btn-holographic">
                     <span>Get Started Free</span>
                 </a>
                 <a href="/auth/login" class="btn btn-secondary btn-lg btn-animated">
@@ -476,16 +878,18 @@
 <!-- CTA Section -->
 <section class="cta-section glass-effect no-glitch">
     <div class="container">
-        <div class="cta-content staggered-children">
-            <h2 class="cta-title">Ready to Transform Your Finances?</h2>
-            <p class="cta-description">Join over 10,000 users who have taken control of their financial future with Money Matrix.</p>
-            <div class="cta-actions">
-                <a href="/auth/register" class="btn btn-primary btn-lg btn-animated">
-                    <span>Start Free Trial</span>
-                </a>
-                <a href="/auth/login" class="btn btn-secondary btn-lg btn-animated">
-                    <span>Sign In</span>
-                </a>
+        <div class="cta-container">
+            <div class="cta-content staggered-children">
+                <h2 class="cta-title">Ready to Transform Your Finances?</h2>
+                <p class="cta-description">Join over 10,000 users who have taken control of their financial future with Money Matrix.</p>
+                <div class="cta-actions">
+                    <a href="/auth/register" class="btn btn-primary btn-lg btn-animated btn-holographic">
+                        <span>Start Free Trial</span>
+                    </a>
+                    <a href="/auth/login" class="btn btn-secondary btn-lg btn-animated">
+                        <span>Sign In</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

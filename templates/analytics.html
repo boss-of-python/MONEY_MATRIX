@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2 class="card-title">Financial Analytics</h2>
+                    <p class="card-subtitle">Insights and trends in your financial data</p>
+                </div>
+                <div class="card-body">
+                    <div class="analytics-filters">
+                        <div class="form-group">
+                            <label for="timePeriod" class="form-label">Time Period</label>
+                            <select class="form-control" id="timePeriod">
+                                <option>Last 7 Days</option>
+                                <option selected>Last 30 Days</option>
+                                <option>Last 90 Days</option>
+                                <option>Last Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Spending by Category</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="spendingChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Income vs Expenses</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="incomeExpenseChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Monthly Trends</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="trendsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card glass-card summary-card">
+                                <div class="card-body">
+                                    <div class="summary-icon">📈</div>
+                                    <h3 class="summary-title">Total Income</h3>
+                                    <p class="summary-value">$12,500.00</p>
+                                    <p class="summary-change positive">+8.2% from last period</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card glass-card summary-card">
+                                <div class="card-body">
+                                    <div class="summary-icon">📉</div>
+                                    <h3 class="summary-title">Total Expenses</h3>
+                                    <p class="summary-value">$8,750.50</p>
+                                    <p class="summary-change negative">+3.1% from last period</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card glass-card summary-card">
+                                <div class="card-body">
+                                    <div class="summary-icon">💰</div>
+                                    <h3 class="summary-title">Net Savings</h3>
+                                    <p class="summary-value">$3,749.50</p>
+                                    <p class="summary-change positive">+15.7% from last period</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Spending by Category Chart
+    const spendingCtx = document.getElementById('spendingChart').getContext('2d');
+    const spendingChart = new Chart(spendingCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Food & Dining', 'Transportation', 'Utilities', 'Shopping', 'Entertainment', 'Housing'],
+            datasets: [{
+                data: [850, 420, 350, 680, 290, 1200],
+                backgroundColor: [
+                    '#4f46e5',
+                    '#0ea5e9',
+                    '#10b981',
+                    '#f59e0b',
+                    '#ef4444',
+                    '#8b5cf6'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+    
+    // Income vs Expenses Chart
+    const incomeExpenseCtx = document.getElementById('incomeExpenseChart').getContext('2d');
+    const incomeExpenseChart = new Chart(incomeExpenseCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Income', 'Expenses'],
+            datasets: [{
+                label: 'Amount ($)',
+                data: [12500, 8750],
+                backgroundColor: [
+                    '#10b981',
+                    '#ef4444'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    
+    // Monthly Trends Chart
+    const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+    const trendsChart = new Chart(trendsCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Income',
+                data: [11200, 11800, 12100, 11900, 12300, 12500],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.3,
+                fill: true
+            }, {
+                label: 'Expenses',
+                data: [8200, 8400, 8600, 8500, 8650, 8750],
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

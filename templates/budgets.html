@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Budgets - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2 class="card-title">Budget Planning</h2>
+                    <p class="card-subtitle">Create and manage your monthly budgets</p>
+                </div>
+                <div class="card-body">
+                    <div class="budgets-toolbar">
+                        <div class="toolbar-left">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search budgets...">
+                            </div>
+                        </div>
+                        <div class="toolbar-right">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#addBudgetModal">
+                                <span class="btn-icon">+</span> Create Budget
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-list">
+                        <div class="budget-item glass-card">
+                            <div class="budget-header">
+                                <h3>Food & Dining</h3>
+                                <div class="budget-actions">
+                                    <button class="btn btn-sm btn-outline">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 64%"></div>
+                                </div>
+                                <div class="budget-amount">
+                                    <span class="spent">$320</span> / <span class="limit">$500</span>
+                                </div>
+                            </div>
+                            <div class="budget-meta">
+                                <span class="budget-period">June 2023</span>
+                                <span class="budget-status positive">On track</span>
+                            </div>
+                        </div>
+                        
+                        <div class="budget-item glass-card">
+                            <div class="budget-header">
+                                <h3>Transportation</h3>
+                                <div class="budget-actions">
+                                    <button class="btn btn-sm btn-outline">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <div class="budget-amount">
+                                    <span class="spent">$180</span> / <span class="limit">$300</span>
+                                </div>
+                            </div>
+                            <div class="budget-meta">
+                                <span class="budget-period">June 2023</span>
+                                <span class="budget-status positive">On track</span>
+                            </div>
+                        </div>
+                        
+                        <div class="budget-item glass-card">
+                            <div class="budget-header">
+                                <h3>Entertainment</h3>
+                                <div class="budget-actions">
+                                    <button class="btn btn-sm btn-outline">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 47.5%"></div>
+                                </div>
+                                <div class="budget-amount">
+                                    <span class="spent">$95</span> / <span class="limit">$200</span>
+                                </div>
+                            </div>
+                            <div class="budget-meta">
+                                <span class="budget-period">June 2023</span>
+                                <span class="budget-status warning">Approaching limit</span>
+                            </div>
+                        </div>
+                        
+                        <div class="budget-item glass-card">
+                            <div class="budget-header">
+                                <h3>Shopping</h3>
+                                <div class="budget-actions">
+                                    <button class="btn btn-sm btn-outline">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 52.5%"></div>
+                                </div>
+                                <div class="budget-amount">
+                                    <span class="spent">$210</span> / <span class="limit">$400</span>
+                                </div>
+                            </div>
+                            <div class="budget-meta">
+                                <span class="budget-period">June 2023</span>
+                                <span class="budget-status positive">On track</span>
+                            </div>
+                        </div>
+                        
+                        <div class="budget-item glass-card">
+                            <div class="budget-header">
+                                <h3>Housing</h3>
+                                <div class="budget-actions">
+                                    <button class="btn btn-sm btn-outline">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                                <div class="budget-amount">
+                                    <span class="spent">$1,200</span> / <span class="limit">$1,200</span>
+                                </div>
+                            </div>
+                            <div class="budget-meta">
+                                <span class="budget-period">June 2023</span>
+                                <span class="budget-status danger">Limit reached</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Budget Modal -->
+<div class="modal fade" id="addBudgetModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Budget</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="budgetName" class="form-label">Budget Name</label>
+                        <input type="text" class="form-control" id="budgetName" placeholder="Enter budget name">
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetCategory" class="form-label">Category</label>
+                        <select class="form-control" id="budgetCategory">
+                            <option>Food & Dining</option>
+                            <option>Transportation</option>
+                            <option>Utilities</option>
+                            <option>Shopping</option>
+                            <option>Entertainment</option>
+                            <option>Housing</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetAmount" class="form-label">Budget Amount</label>
+                        <input type="number" class="form-control" id="budgetAmount" placeholder="Enter budget amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetPeriod" class="form-label">Period</label>
+                        <select class="form-control" id="budgetPeriod">
+                            <option>Monthly</option>
+                            <option>Weekly</option>
+                            <option>Yearly</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Create Budget</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

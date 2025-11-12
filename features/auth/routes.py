@@ -140,7 +140,7 @@ def register_routes(bp, app):
                 return jsonify({'error': error}), 400
             
             # Generate password reset link (Firebase handles email sending)
-            link = auth.generate_password_reset_link(email)
+            auth.generate_password_reset_link(email)
             
             logger.info(f"Password reset requested for: {email}")
             

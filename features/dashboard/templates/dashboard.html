@@ -180,33 +180,36 @@
 </style>
 
 <script type="module">
-import { auth, signOut, onAuthStateChanged, isConfigured } from '/static/js/firebase-config.js';
+import { initializeFirebase, auth, isConfigured } from '/static/js/firebase-config.js';
 
 let currentUser = null;
 let authInitialized = false;
 
-// Only check auth if Firebase is configured
-if (isConfigured && auth) {
-    // Check if user is authenticated
-    onAuthStateChanged(auth, async (user) => {
-        authInitialized = true;
-        if (user) {
-            currentUser = user;
-            // Hide loading, show dashboard content
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('dashboardContent').style.display = 'block';
-            document.getElementById('userEmail').textContent = `Logged in as: ${user.email}`;
-            await loadDashboardData();
-        } else {
-            // Not authenticated - redirect to login
-            window.location.replace('/auth/login');
-        }
-    });
-} else {
-    // Firebase not configured - running in demo mode
-    console.log('Firebase not configured - running in demo mode');
-    checkDemoAccess();
-}
+// Initialize Firebase
+initializeFirebase().then(() => {
+    // Only check auth if Firebase is configured
+    if (isConfigured && auth) {
+        // Check if user is authenticated
+        auth.onAuthStateChanged(async (user) => {
+            authInitialized = true;
+            if (user) {
+                currentUser = user;
+                // Hide loading, show dashboard content
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('dashboardContent').style.display = 'block';
+                document.getElementById('userEmail').textContent = `Logged in as: ${user.email}`;
+                await loadDashboardData();
+            } else {
+                // Not authenticated - redirect to login
+                window.location.replace('/auth/login');
+            }
+        });
+    } else {
+        // Firebase not configured - running in demo mode
+        console.log('Firebase not configured - running in demo mode');
+        checkDemoAccess();
+    }
+});
 
 // Check if demo access is allowed (development mode)
 function checkDemoAccess() {
@@ -265,10 +268,11 @@ async function loadDashboardData() {
 document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
         if (auth && currentUser) {
-            await signOut(auth);
+            await firebase.auth().signOut();
         }
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user_email');
+        localStorage.removeItem('user_name');
         
         // Call backend logout
         await fetch('/auth/logout', { method: 'POST' });

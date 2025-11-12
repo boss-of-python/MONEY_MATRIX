@@ -1,0 +1,50 @@
+{
+  "page_name": "Budgets",
+  "timestamp": "2025-11-11T18:31:01.541393",
+  "ui_metrics": {
+    "budgets_list_visible": true,
+    "create_budget_form_visible": true,
+    "budget_cards_visible": true,
+    "budget_summary_visible": true,
+    "category_breakdown_visible": true,
+    "spending_progress_visible": true,
+    "budget_controls_visible": true,
+    "edit_budget_modal_visible": true,
+    "delete_budget_modal_visible": true,
+    "glassmorphism_effects": true,
+    "animations_working": true,
+    "responsive_design": true,
+    "typography_consistent": true,
+    "color_scheme_correct": true
+  },
+  "logic_metrics": {
+    "budget_creation_working": true,
+    "budget_editing_working": true,
+    "budget_deletion_working": true,
+    "budget_validation": true,
+    "category_management": true,
+    "spending_tracking": true,
+    "budget_limit_enforcement": true,
+    "data_persistence": true,
+    "api_integration": true,
+    "error_handling": true,
+    "session_management": true,
+    "api_endpoints_accessible": true
+  },
+  "ux_metrics": {
+    "budget_creation_time": 0.0,
+    "budget_management_efficiency": 0.0,
+    "user_engagement_time": 0.0,
+    "feature_usage_rate": 0.0,
+    "error_rate": 0.0,
+    "user_satisfaction": 0.0,
+    "accessibility_score": 0.0,
+    "mobile_friendly": true
+  },
+  "performance_metrics": {
+    "response_time": 0,
+    "render_time": 0,
+    "memory_usage": 0,
+    "cpu_usage": 0
+  }
+}

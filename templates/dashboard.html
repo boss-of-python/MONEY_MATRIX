@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="welcome-banner glass-card">
+                <h1>Welcome back, <span id="userName">User</span>!</h1>
+                <p>Here's your financial overview for today</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="card glass-card summary-card">
+                <div class="card-body">
+                    <div class="summary-icon">💰</div>
+                    <h3 class="summary-title">Total Balance</h3>
+                    <p class="summary-value">$12,450.75</p>
+                    <p class="summary-change positive">+2.5% from last month</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6">
+            <div class="card glass-card summary-card">
+                <div class="card-body">
+                    <div class="summary-icon">📥</div>
+                    <h3 class="summary-title">Income</h3>
+                    <p class="summary-value">$4,200.00</p>
+                    <p class="summary-change positive">+5.2% from last month</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6">
+            <div class="card glass-card summary-card">
+                <div class="card-body">
+                    <div class="summary-icon">📤</div>
+                    <h3 class="summary-title">Expenses</h3>
+                    <p class="summary-value">$2,850.25</p>
+                    <p class="summary-change negative">+1.8% from last month</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6">
+            <div class="card glass-card summary-card">
+                <div class="card-body">
+                    <div class="summary-icon">🎯</div>
+                    <h3 class="summary-title">Budget Left</h3>
+                    <p class="summary-value">$1,349.75</p>
+                    <p class="summary-change positive">On track</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Transactions</h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2023-06-15</td>
+                                    <td>Grocery Store</td>
+                                    <td>Food & Dining</td>
+                                    <td class="negative">-$85.30</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-14</td>
+                                    <td>Salary Deposit</td>
+                                    <td>Income</td>
+                                    <td class="positive">+$3,500.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-12</td>
+                                    <td>Electric Bill</td>
+                                    <td>Utilities</td>
+                                    <td class="negative">-$120.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-10</td>
+                                    <td>Gas Station</td>
+                                    <td>Transportation</td>
+                                    <td class="negative">-$45.20</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-08</td>
+                                    <td>Online Shopping</td>
+                                    <td>Shopping</td>
+                                    <td class="negative">-$62.75</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/transactions" class="btn btn-outline">View All Transactions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2 class="card-title">Budget Overview</h2>
+                </div>
+                <div class="card-body">
+                    <div class="budget-item">
+                        <div class="budget-info">
+                            <h4>Food & Dining</h4>
+                            <p>$320 / $500</p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 64%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-item">
+                        <div class="budget-info">
+                            <h4>Transportation</h4>
+                            <p>$180 / $300</p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-item">
+                        <div class="budget-info">
+                            <h4>Entertainment</h4>
+                            <p>$95 / $200</p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 47.5%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-item">
+                        <div class="budget-info">
+                            <h4>Shopping</h4>
+                            <p>$210 / $400</p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 52.5%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="/budgets" class="btn btn-outline">Manage Budgets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update user name from localStorage
+    const userNameElement = document.getElementById('userName');
+    if (userNameElement) {
+        const name = localStorage.getItem('user_name') || 'User';
+        userNameElement.textContent = name;
+    }
+});
+</script>
+{% endblock %}

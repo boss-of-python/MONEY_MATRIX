@@ -103,6 +103,12 @@
                     <span id="userId" class="info-value">-</span>
                 </div>
             </div>
+            
+            <div class="button-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-error" id="logoutBtn" style="width: 100%;">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -266,28 +272,31 @@
 </style>
 
 <script type="module">
-import { auth, onAuthStateChanged, isConfigured } from '/static/js/firebase-config.js';
+import { initializeFirebase, auth, isConfigured } from '/static/js/firebase-config.js';
 
 let currentUser = null;
 
-// Only check auth if Firebase is configured
-if (isConfigured && auth) {
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            currentUser = user;
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('settingsContent').style.display = 'block';
-            await loadSettings();
-        } else {
-            window.location.replace('/auth/login');
-        }
-    });
-} else {
-    // Demo mode
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('settingsContent').style.display = 'block';
-    loadDemoSettings();
-}
+// Initialize Firebase
+initializeFirebase().then(() => {
+    // Only check auth if Firebase is configured
+    if (isConfigured && auth) {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('settingsContent').style.display = 'block';
+                await loadSettings();
+            } else {
+                window.location.replace('/auth/login');
+            }
+        });
+    } else {
+        // Demo mode
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('settingsContent').style.display = 'block';
+        loadDemoSettings();
+    }
+});
 
 async function loadSettings() {
     // Load user info
@@ -442,5 +451,20 @@ const savedTheme = localStorage.getItem('theme') || 'auto';
 const savedCurrency = localStorage.getItem('currency') || 'USD';
 document.getElementById('theme').value = savedTheme;
 document.getElementById('currency').value = savedCurrency;
-</script>
-{% endblock %}
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    // Use the existing Navigation.logout() function
+    if (window.Navigation && typeof window.Navigation.logout === 'function') {
+        window.Navigation.logout();
+    } else {
+        // Fallback if Navigation is not available
+        console.warn('Navigation.logout() not available, using fallback');
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_email');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_avatar');
+        sessionStorage.clear();
+        window.location.replace('/auth/login');
+    }
+});

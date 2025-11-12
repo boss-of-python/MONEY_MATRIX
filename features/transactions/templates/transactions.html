@@ -247,33 +247,36 @@
 </style>
 
 <script type="module">
-import { auth, onAuthStateChanged, isConfigured } from '/static/js/firebase-config.js';
+import { initializeFirebase, auth, isConfigured } from '/static/js/firebase-config.js';
 
 let currentPage = 1;
 let currentUser = null;
 let authInitialized = false;
 
-// Only check auth if Firebase is configured
-if (isConfigured && auth) {
-    // Check authentication
-    onAuthStateChanged(auth, async (user) => {
-        authInitialized = true;
-        if (user) {
-            currentUser = user;
-            // Hide loading, show content
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('transactionsContent').style.display = 'block';
-            await loadTransactions();
-        } else {
-            // Not authenticated - redirect to login
-            window.location.replace('/auth/login');
-        }
-    });
-} else {
-    // Firebase not configured - demo mode
-    console.log('Firebase not configured - running in demo mode');
-    checkDemoAccess();
-}
+// Initialize Firebase
+initializeFirebase().then(() => {
+    // Only check auth if Firebase is configured
+    if (isConfigured && auth) {
+        // Check authentication
+        auth.onAuthStateChanged(async (user) => {
+            authInitialized = true;
+            if (user) {
+                currentUser = user;
+                // Hide loading, show content
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('transactionsContent').style.display = 'block';
+                await loadTransactions();
+            } else {
+                // Not authenticated - redirect to login
+                window.location.replace('/auth/login');
+            }
+        });
+    } else {
+        // Firebase not configured - demo mode
+        console.log('Firebase not configured - running in demo mode');
+        checkDemoAccess();
+    }
+});
 
 // Check if demo access is allowed (development mode)
 function checkDemoAccess() {

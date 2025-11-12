@@ -1,0 +1,52 @@
+{
+  "page_name": "Settings",
+  "timestamp": "2025-11-11T18:31:01.541430",
+  "ui_metrics": {
+    "profile_settings_visible": true,
+    "security_settings_visible": true,
+    "notification_settings_visible": true,
+    "privacy_settings_visible": true,
+    "account_settings_visible": true,
+    "theme_toggle_visible": true,
+    "language_selector_visible": true,
+    "save_changes_button_visible": true,
+    "cancel_button_visible": true,
+    "delete_account_button_visible": true,
+    "glassmorphism_effects": true,
+    "animations_working": true,
+    "responsive_design": true,
+    "typography_consistent": true,
+    "color_scheme_correct": true
+  },
+  "logic_metrics": {
+    "profile_update_working": true,
+    "password_change_working": true,
+    "email_update_working": true,
+    "notification_preferences": true,
+    "privacy_settings_save": true,
+    "theme_preference_save": true,
+    "language_preference_save": true,
+    "account_deletion": true,
+    "data_validation": true,
+    "api_integration": true,
+    "error_handling": true,
+    "session_management": true,
+    "api_endpoints_accessible": true
+  },
+  "ux_metrics": {
+    "settings_update_time": 0.0,
+    "form_completion_rate": 0.0,
+    "user_engagement_time": 0.0,
+    "feature_usage_rate": 0.0,
+    "error_rate": 0.0,
+    "user_satisfaction": 0.0,
+    "accessibility_score": 0.0,
+    "mobile_friendly": true
+  },
+  "performance_metrics": {
+    "response_time": 0,
+    "render_time": 0,
+    "memory_usage": 0,
+    "cpu_usage": 0
+  }
+}

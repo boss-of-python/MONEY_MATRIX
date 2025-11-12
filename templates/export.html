@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Export Data - Money Matrix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2 class="card-title">Export Financial Data</h2>
+                    <p class="card-subtitle">Download your financial records in various formats</p>
+                </div>
+                <div class="card-body">
+                    <div class="export-options">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="export-card glass-card">
+                                    <div class="export-icon">📊</div>
+                                    <h3>Transaction History</h3>
+                                    <p>Export all your transaction records with full details</p>
+                                    <div class="export-formats">
+                                        <button class="btn btn-outline btn-sm">CSV</button>
+                                        <button class="btn btn-outline btn-sm">Excel</button>
+                                        <button class="btn btn-outline btn-sm">PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="export-card glass-card">
+                                    <div class="export-icon">💰</div>
+                                    <h3>Budget Reports</h3>
+                                    <p>Export your budget performance and analysis reports</p>
+                                    <div class="export-formats">
+                                        <button class="btn btn-outline btn-sm">CSV</button>
+                                        <button class="btn btn-outline btn-sm">Excel</button>
+                                        <button class="btn btn-outline btn-sm">PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="export-card glass-card">
+                                    <div class="export-icon">📈</div>
+                                    <h3>Financial Summary</h3>
+                                    <p>Export income, expenses, and savings summaries</p>
+                                    <div class="export-formats">
+                                        <button class="btn btn-outline btn-sm">CSV</button>
+                                        <button class="btn btn-outline btn-sm">Excel</button>
+                                        <button class="btn btn-outline btn-sm">PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="export-card glass-card">
+                                    <div class="export-icon">📅</div>
+                                    <h3>Custom Report</h3>
+                                    <p>Create and export a custom report with specific data</p>
+                                    <div class="export-formats">
+                                        <button class="btn btn-primary">Create Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="export-history">
+                        <h3>Recent Exports</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Export Type</th>
+                                        <th>Date</th>
+                                        <th>Format</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Transaction History</td>
+                                        <td>2023-06-15 14:30</td>
+                                        <td>CSV</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                        <td><button class="btn btn-sm btn-outline">Download</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Budget Reports</td>
+                                        <td>2023-06-10 09:15</td>
+                                        <td>PDF</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                        <td><button class="btn btn-sm btn-outline">Download</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Financial Summary</td>
+                                        <td>2023-06-01 16:45</td>
+                                        <td>Excel</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                        <td><button class="btn btn-sm btn-outline">Download</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
