@@ -31,7 +31,7 @@ class CloudSyncService:
                 logger.warning("⚠️  Cloud Firestore API is not enabled")
                 logger.info("")
                 logger.info("📋 To enable Cloud Sync:")
-                logger.info("   1. Visit: https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=money-matrix-6d87d")
+                logger.info("   1. Visit: https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=YOUR_PROJECT_ID")
                 logger.info("   2. Click 'Enable API'")
                 logger.info("   3. Go to Firebase Console > Firestore Database")
                 logger.info("   4. Click 'Create Database' > 'Start in test mode'")

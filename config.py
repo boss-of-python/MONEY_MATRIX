@@ -28,13 +28,13 @@ class Config:
     FIREBASE_CREDENTIALS_PATH = os.getenv('FIREBASE_CREDENTIALS', 'S:/MONEY_MATRIX/MONEY_MATRIX/firebase_credentials.json')
     
     # Firebase Web Configuration (for frontend)
-    FIREBASE_API_KEY = os.getenv('FIREBASE_API_KEY', 'AIzaSyAYGjAM6f9m0qnxEac1yEwIkrTfAB1u2Dc')
-    FIREBASE_AUTH_DOMAIN = os.getenv('FIREBASE_AUTH_DOMAIN', 'money-matrix-6d87d.firebaseapp.com')
-    FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', 'money-matrix-6d87d')
-    FIREBASE_STORAGE_BUCKET = os.getenv('FIREBASE_STORAGE_BUCKET', 'money-matrix-6d87d.firebasestorage.app')
-    FIREBASE_MESSAGING_SENDER_ID = os.getenv('FIREBASE_MESSAGING_SENDER_ID', '93196660287')
-    FIREBASE_APP_ID = os.getenv('FIREBASE_APP_ID', '1:93196660287:web:e5b7a8f4e06d258fb3528a')
-    FIREBASE_MEASUREMENT_ID = os.getenv('FIREBASE_MEASUREMENT_ID', 'G-HBNB8V781B')
+    FIREBASE_API_KEY = os.getenv('FIREBASE_API_KEY', 'YOUR_API_KEY')
+    FIREBASE_AUTH_DOMAIN = os.getenv('FIREBASE_AUTH_DOMAIN', 'your-project.firebaseapp.com')
+    FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID', 'your-project-id')
+    FIREBASE_STORAGE_BUCKET = os.getenv('FIREBASE_STORAGE_BUCKET', 'your-project.appspot.com')
+    FIREBASE_MESSAGING_SENDER_ID = os.getenv('FIREBASE_MESSAGING_SENDER_ID', '123456789')
+    FIREBASE_APP_ID = os.getenv('FIREBASE_APP_ID', '1:123456789:web:abcdef')
+    FIREBASE_MEASUREMENT_ID = os.getenv('FIREBASE_MEASUREMENT_ID', 'G-XXXXXXXXXX')
     
     # AI/ML Configuration
     GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
